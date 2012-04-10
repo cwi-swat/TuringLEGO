@@ -10,14 +10,13 @@ byte readBit() {
 	SetSensorColorGreen(SCANNERSENSOR);
 	ResetSensor(SCANNERSENSOR);
 	unsigned int val = Sensor(SCANNERSENSOR);
-	byte result = val < SCANNERTHRESHOLD ? 1 : 0;
 	TextOut(15, LCD_LINE2, StrCat("RAW: ", NumToStr(val)));	
 	SetSensorColorNone(SCANNERSENSOR);
 	ResetSensor(SCANNERSENSOR);
 
-	RotateMotor(SCANNERMOTOR, 10, SCANNORMOTORDIPANGLE);
+	RotateMotor(SCANNERMOTOR, 20, SCANNORMOTORDIPANGLE);
 	Wait(100);
-	return result;
+	return val < SCANNERTHRESHOLD ? 1 : 0;
 }
 
 task main() {
