@@ -1,7 +1,34 @@
+#define SCANNERMOTOR OUT_A
+#define SCANNORMOTORDIPANGLE 60
+#define SCANNERSENSOR S1
+#define SCANNERTHRESHOLD 25 
+
+byte readBit() {
+	RotateMotor(SCANNERMOTOR, 10, -SCANNORMOTORDIPANGLE);
+	Wait(500);
+
+	SetSensorColorGreen(SCANNERSENSOR);
+	ResetSensor(SCANNERSENSOR);
+	unsigned int val = Sensor(SCANNERSENSOR);
+	byte result = val < SCANNERTHRESHOLD ? 1 : 0;
+	TextOut(15, LCD_LINE2, StrCat("RAW: ", NumToStr(val)));	
+	SetSensorColorNone(SCANNERSENSOR);
+	ResetSensor(SCANNERSENSOR);
+
+	RotateMotor(SCANNERMOTOR, 10, SCANNORMOTORDIPANGLE);
+	Wait(100);
+	return result;
+}
 
 task main() {
 	int direction = 0;
-
-	
-
+	while (true) {
+		if (readBit() == 1) {
+			TextOut(15, LCD_LINE1, "Bit: 1");	
+		}
+		else {
+			TextOut(15, LCD_LINE1, "Bit: 0");	
+		}
+		Wait(4000);
+	}
 }
