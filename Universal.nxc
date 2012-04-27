@@ -1,0 +1,127 @@
+#define SCANNERMOTOR OUT_A
+#define SCANNORMOTORDIPANGLE 73
+#define SCANNERSENSOR S1
+#define SCANNERTHRESHOLD 35
+//#define DEBUGSENSOR
+
+#define WRITEMOTOR OUT_B
+
+
+#define TAPEMOTOR OUT_C
+#define TAPEMOTORANGLE ((8*360) + 155)
+
+
+#define JMP 1
+#define WRITE 2
+#define MOVE 3
+
+
+byte readBit() {
+	RotateMotor(SCANNERMOTOR, 20, -SCANNORMOTORDIPANGLE);
+	Wait(200);
+
+	SetSensorColorGreen(SCANNERSENSOR);
+	ResetSensor(SCANNERSENSOR);
+	unsigned int val = Sensor(SCANNERSENSOR);
+#ifdef DEBUGSENSOR
+	TextOut(15, LCD_LINE2, StrCat("RAW: ", NumToStr(val)));	
+#endif
+	SetSensorColorNone(SCANNERSENSOR);
+	ResetSensor(SCANNERSENSOR);
+
+	RotateMotor(SCANNERMOTOR, 30, SCANNORMOTORDIPANGLE);
+	Wait(10);
+	return val < SCANNERTHRESHOLD ? 1 : 0;
+}
+
+inline void incrementTapePosition() {
+	RotateMotor(TAPEMOTOR, 80, -TAPEMOTORANGLE);	
+}
+inline void decrementTapePosition() {
+	RotateMotor(TAPEMOTOR, 80, TAPEMOTORANGLE);	
+}
+
+inline void write1() {
+	RotateMotor(WRITEMOTOR, 20, -180);
+}
+inline void write0() {
+	RotateMotor(WRITEMOTOR, 20, 180);
+}
+
+inline int getLineCount(string filename) {
+	byte fid = fopen(fileName, "r");
+	int lineCount = 0;
+	while (true) {
+		string line;
+		fgets(line, 20, fid);
+		lineCount++;
+		unsigned int strLen = StrLen(line);
+		if (line[strLen] != '\n') 
+			break;
+	}
+	fclose(fid);
+	return lineCount;
+}
+
+inline string getLines(string fileName) {
+	int lineCount = getLineCount(fileName);
+	byte fid = fopen(fileName, "r");
+	string[] result;
+	ArrayInit(result, "", lineCount);
+	for (int i=0; i < lineCount; i++) {
+		string line;
+		fgets(line, 20, fid);
+		result[i] = line;
+	}
+	fclose(fid);
+	return result;
+}
+
+int[][] parseTuringCommands(string[] lines) {
+	int[][] result;
+	int[] template = {0,0,0};
+	ArrayInit(result, template, ArrayLen(lines));
+	for (int i=0; i < ArrayLen(lines); i++) {
+		if (lines[i][0] == 'J') {
+			result[i][0] = JMP;
+			if (lines[i][1] == '_') {
+				result[i][1] = 2;
+			}
+			else if (lines[i][1] == '1' ){
+				result[i][1] = 1;
+			}
+			string number = SubStr(lines[i], 2, StrLen(lines[i]) - 2);
+			string rest;
+			result[i][2] = strtol(number, rest);
+		}
+		else if (lines[i][0] == 'M') {
+			result[i][0] = MOVE;
+			if (lines[i][1] == 'F') {
+				result[i][0] = 1;
+			}
+			else {
+				result[i][0] = -1;
+			}
+		}
+		else if (lines[i][0] == 'W') {
+			result[i][0] = WRITE;
+			if (lines[i][1] == '1') {
+				result[i][0] = 1;
+			}
+			else {
+				result[i][0] = 0;
+			}
+		}
+		else {
+			TextOut(1, LCD_LINE1, StrCat("Error: ", lines[i]));
+		}
+	}
+	return result;
+}
+
+
+
+task main() {
+	
+
+}
