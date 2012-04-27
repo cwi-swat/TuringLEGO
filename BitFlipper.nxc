@@ -1,18 +1,18 @@
 #define SCANNERMOTOR OUT_A
-#define SCANNORMOTORDIPANGLE 60
+#define SCANNORMOTORDIPANGLE 73
 #define SCANNERSENSOR S1
-#define SCANNERTHRESHOLD 25 
+#define SCANNERTHRESHOLD 35
 //#define DEBUGSENSOR
 
 #define WRITEMOTOR OUT_B
 
 
 #define TAPEMOTOR OUT_C
-#define TAPEMOTORANGLE 42
+#define TAPEMOTORANGLE ((8*360) + 155)
 
 
 byte readBit() {
-	RotateMotor(SCANNERMOTOR, 10, -SCANNORMOTORDIPANGLE);
+	RotateMotor(SCANNERMOTOR, 20, -SCANNORMOTORDIPANGLE);
 	Wait(200);
 
 	SetSensorColorGreen(SCANNERSENSOR);
@@ -24,16 +24,16 @@ byte readBit() {
 	SetSensorColorNone(SCANNERSENSOR);
 	ResetSensor(SCANNERSENSOR);
 
-	RotateMotor(SCANNERMOTOR, 20, SCANNORMOTORDIPANGLE);
+	RotateMotor(SCANNERMOTOR, 30, SCANNORMOTORDIPANGLE);
 	Wait(10);
 	return val < SCANNERTHRESHOLD ? 1 : 0;
 }
 
 inline void incrementTapePosition() {
-	RotateMotor(TAPEMOTOR, 20, -TAPEMOTORANGLE);	
+	RotateMotor(TAPEMOTOR, 80, -TAPEMOTORANGLE);	
 }
 inline void decrementTapePosition() {
-	RotateMotor(TAPEMOTOR, 20, TAPEMOTORANGLE);	
+	RotateMotor(TAPEMOTOR, 80, TAPEMOTORANGLE);	
 }
 
 inline void write1() {
@@ -47,7 +47,7 @@ inline void write0() {
 task main() {
 	bool forward = true;
 	while (true) {
-		for (int bit = 0; bit < 16; bit++) {
+		for (int bit = 0; bit < 10; bit++) {
 			if (readBit() == 1) {
 				TextOut(15, LCD_LINE1, "Bit: 1");
 				write0();
