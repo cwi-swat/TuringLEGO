@@ -1,0 +1,11 @@
+#define SCANNERSENSOR S1
+
+task main() {
+	SetSensorColorGreen(SCANNERSENSOR);
+	ResetSensor(SCANNERSENSOR);
+	while (true) {
+		unsigned int val = Sensor(SCANNERSENSOR);
+		TextOut(15, LCD_LINE2, StrCat("RAW: ", NumToStr(val)));	
+		Wait(10);
+	}
+}
