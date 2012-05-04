@@ -1,0 +1,55 @@
+typedef unsigned int myType ;
+
+struct person
+{
+  string name;
+  myType age;
+};
+
+struct car
+{
+  string car_type;
+  int manu_year;
+};
+
+myType fred = 23;
+person myPerson;
+
+task main()
+{
+  typedef const unsigned long anotherType;
+  person anotherPerson;
+  car fooBar;
+  
+  myPerson.age = 40;
+  
+  anotherPerson = myPerson;
+  
+  fooBar.car_type = "honda";
+  fooBar.manu_year = anotherPerson.age;
+//  fooBar = anotherPerson;
+  fooBar.manu_year += 1;
+  
+  fooBar += 2;
+  
+  anotherPerson.age = myPerson.age + 1;
+  anotherPerson.name = "testing";
+  
+  anotherType j = 12;
+  
+  int i = 0;
+  
+  i = j + 10;
+  
+  NumOut(0, LCD_LINE1, fooBar.manu_year);
+  NumOut(0, LCD_LINE2, myPerson.age);
+  NumOut(0, LCD_LINE3, anotherPerson.age);
+  NumOut(0, LCD_LINE4, j);
+  NumOut(0, LCD_LINE5, i);
+  TextOut(0, LCD_LINE6, anotherPerson.name);
+  TextOut(0, LCD_LINE7, fooBar.car_type);
+  fooBar -= 2;
+  TextOut(0, LCD_LINE8, fooBar.car_type);
+  Wait(10000);
+}
+

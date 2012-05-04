@@ -1,0 +1,116 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" First parameter, NAME, should be all caps
+.\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
+.\" other parameters are allowed: see man(7), man(1)
+.TH NBC 1 "September  21, 2009"
+.\" Please adjust this date whenever revising the manpage.
+.\"
+.\" Some roff macros, for reference:
+.\" .nh        disable hyphenation
+.\" .hy        enable hyphenation
+.\" .ad l      left justify
+.\" .ad b      justify to both left and right margins
+.\" .nf        disable filling
+.\" .fi        enable filling
+.\" .br        insert line break
+.\" .sp <n>    insert n+1 empty lines
+.\" for manpage-specific macros, see man(7)
+.SH NAME
+nbc \- Compiler for LEGO Mindstorms NXT
+.SH SYNOPSIS
+.B nbc
+.RI [ options ] " file " [options]
+.SH DESCRIPTION
+This manual page documents briefly the
+.B nbc
+command.
+.PP
+.\" TeX users may be more comfortable with the \fB<whatever>\fP and
+.\" \fI<whatever>\fP escape sequences to invode bold face and italics,
+.\" respectively.
+\fBnbc\fP is a program that compiles Not eXactly C (NXC) files 
+or NeXT Byte Code (NBC) files into programs that can run on the standard
+LEGO MINDSTORMS NXT firmware or the enhanced NBC/NXC firmware. The nbc 
+compiler can either save the compiler output to a file or upload
+it to a LEGO Mindstorms NXT for execution.  The compiler can also
+compile NXT Picture files (.ric) using the text-based RICScript 
+language.  Since nbc can compile different programming languages it
+uses the file extension to determine the type of code it is compiling.
+NXC programs should use the .nxc file extension, NBC programs should 
+use the .nbc file extension, and RICScript programs should use the .rs 
+file extension.
+.SH OPTIONS
+.TP
+.B \-S=<portname>
+specify port name (COMn or usb), resource name, or alias
+.TP
+.B \-d
+download program
+.TP
+.B \-b
+treat input file as a binary file (don't compile it)
+.TP
+.B \-q
+quiet mode
+.TP
+.B \-n
+prevent the system file from being included
+.TP
+.B \-D=<sym>[=<value>]
+define macro <sym>
+.TP
+.B \-x
+decompile program
+.TP
+.B \-Z[1|2]
+turn on compiler optimizations
+.TP
+.B \-ER=n
+set maximum errors before aborting (0 == no limit)
+.TP
+.B \-PD=n
+set max preprocessor recursion depth (default == 10)
+.TP
+.B \-O=<filename>
+specify output file
+.TP
+.B \-E=<filename>
+ write compiler errors to <filename>
+.TP
+.B \-I=<path>
+search <path> for include files
+.TP
+.B \-nbc=<filename>
+save NXC intermediate NBC code to <filename>
+.TP
+.B \-L=<filename>
+generate code listing to <filename>
+.TP
+.B \-Y=<filename>
+generate symbol table to <filename>
+.TP
+.B \-w[-|+]
+warnings off or on [default is on]
+.TP
+.B \-sm[-|+]
+compiler status messages off or on [default is on]
+.TP
+.B \-EF
+enhanced firmware
+.TP
+.B \-safecall
+NXC will wrap all function calls in Acquire/Release
+.TP
+.B \-api
+dump the API to stdout
+.TP
+.B \-v=n
+set the targeted firmware version (default == 128, NXT 1.1 == 105)
+.TP
+.B \-help
+display command line options
+.SH AUTHOR
+nbc was written by John Hansen.
+.PP
+This manual page was written by Sebastian Reichel <elektranox@gmail.com>,
+for the Debian project (but may be used by others).

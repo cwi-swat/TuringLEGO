@@ -1,0 +1,1596 @@
+NBC/NXC Release Notes
+-----------------
+
+Please send bug reports to bricxcc@comcast.net.  Be sure to include
+details about what platform you are running nbc/nxc on and a sample
+file that demonstrates the bug if possible.
+
+For updates and additional documentation, visit the NBC Web Site:
+http://bricxcc.sourceforge.net/nbc/.  Send emails to bricxcc@comcast.net.
+
+Version 1.2.1.r4 (2011-03-13)
+-----------------------------
+- Fixed a problem with using NBC keywords in NXC code.
+- Fixed GetBrickDataAddress defect (nested asm blocks are not supported)
+- Fixed HSMode offset in NBCCommon.h
+- Enum and switch case label fixes/changes for NXC
+- Fixed bug in StrReplace.
+- Fixed bug in FileResize subroutine
+- Compiler optimizer fix to work around standard firmware bug when output 
+  variable is float
+- Fixed small problem with negative numbers as parameter default values.
+- Fixed CurrentTick and FirstTick to return unsigned value
+- Fixed bug in bcd2dec (was using signed stack instead unsigned)
+- Fixed bug in switch statement containing a continue
+- Fixed defect with OnFwdSyncPID, OnRevSyncPID, OnFwdRegExPID, and OnRevRegExPID.
+- Added support for math assignment with arrays of UDTs
+- Added support for new enhanced firmware FileTell system call function
+- Added MemoryManager system call function
+- Added API functions for the LEGO temperature sensor, HiTechnic Magnet and 
+  Angle sensors, the Codatex RFID sensor, and the new MemoryManager system call.
+- Added support for setting the new BtDataMode and HsDataMode fields in the 
+  Comm module IOMap
+- Added support for HS multi-NXT addressing (requires latest 1.31 enhanced 
+  NBC/NXC firmware)
+- Added SizeOf API function and modified Read and ReadLn to use it.
+- Added Pos function.
+- API header file changes for fopen and other minor things
+- Moved IOCtrl module functions after Command module functions
+- StrCat and overloaded + operator changes (for string concatenation)
+- Made SetHSMode an inline function so that it checks for int-sized input 
+  parameter
+- Added support for escaping in character literals
+- Added support for optional string error message in compchk opcode.
+- Added support for position regulation
+- Updated example code for GetBrickDataAddress
+- Replaced the sample programs for FlattenVar and UnflattenVar.
+- Added example file documentation
+- Added examples for the Mindsensors ACCLNx device
+- New examples for the MemoryManager system call function and limits.h constants.
+- Adding examples for new API functions.
+- New examples for FindFirstFile and FindNextFile.
+- Updated doxygen comments for several functions that no longer require constant 
+  inputs
+- Many API additions and changes
+
+
+Version 1.2.1.r3 (2010-06-29)
+-----------------------------
+- Fixed a bug with the new comma operator support when using ?: in 
+  function calls
+- Fixed reference count NBC optimization defect when function is defined after 
+  all its callers.
+- Fixed global initialization defect when the global declaration occurs after 
+  task main.
+- Renaming addr, reladdr, and addrex to be addressOf, reladdressOf, and addressOfEx.
+
+Version 1.2.1.r2 (2010-06-06)
+-----------------------------
+- Reverted changes to relation expressions so you again have to use
+  parenthesis if you want a relation on the RHS of a relation.
+- Fixed a bug with the precedence level of the ! operator.
+- Added support for comma operator.
+- Fixed regression in ReadSensorMSPlayStation and ReadSensorMSPlayStationEx
+- Added command line switch to turn off status messages.
+- Significant changes to expression parsing to correct operator precedence
+  and associativity defects.
+- Fixed string and character literal parsing bug (for the '/' character)
+- Fixed NBC sizeof operator bug (it was incorrectly padding the size of 
+  byte-sized fields in structures).
+- Fixed compiler hang when a struct array member specifies a size.  The size
+  now simply ignored.
+- Fixed preprocessor defect with "." in front of a preprocessor macro
+- Allow for a string to be considered an array type when passing it as 
+  parameter to a function. Also return an ArrayBaseType of TOK_BYTEDEF 
+  when a string is passed in and return 1 from GetArrayDimension when a 
+  string is passed in.
+
+
+Version 1.2.1.r1 (2010-05-13)
+-----------------------------
+- Added support for '\' line continuation characters in NBC source code.
+- Added support for initializing structs and for declaring const structs.
+- Added Arno van der Vegt's graphics library to the standard header files.
+- Added Tone type and the PlayTones and PlaySound functions.
+- Fixed defect in DrawGraphicType structure
+- Fixed some case sensitive bugs in the NXC parser.
+- Fixed NBC sizeof to not pad
+- Add compiler status message if compile failed
+- Fixed bug in reference parameters following an array or UDT argument
+- Added support for string expressions in several API functions including StrCat.
+- Default compiler firmware version target is now 128 (used to be 105).
+- Header files now contain doxygen comments
+- Fixed a bug in atof
+- Added DisplayFont, SetDisplayFont, and addr functions
+- Added support for assignments as expressions
+- Fixed a bug with asm statements passed into function call parameters
+- Fixed a bug in for loop initialization when declaring a local variable of type float
+- Added DRAW_OPT_POLYGON_POLYLINE constant to support enhanced firmware change to 
+  DrawPolygon system call
+- Improved support for math assignment operations with arrays and structs
+- Fixed defect in NXCDefs.h where float type was used outside a check for firmware > 107
+- Added ClearLine API function
+- Fixed a bug in inline functions that return a struct
+- Fixed a bug passing a UDT array expression into an inline function taking a UDT arg
+- Added reladdr and addrex functions (requires latest enhanced NBC/NXC firmware)
+- Fixed memcmp function
+- Added support for full boolean expressions on RHS of relation
+
+
+Version 1.0.1.b36
+-----------------
+- Added support for \", \', and \\ embedded in NXC and NBC strings.
+- Added -ER=n maximum compiler error switch. Filtered out duplicate errors as well.
+- Added support for 2D scalar constant array initialization using nested brace pairs.
+  e.g., int xyz[][] = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+- Added support for global constant string initialization and subsequent usage.
+  e.g., const string g_bar = "bar"; const string g_foo = g_bar;
+- Added support for constant string array initialization using comma-separated
+  string constants within brace pairs. e.g., string msgs[] = {"hi", "there", "testing", g_bar, g_foo};
+- Added support for multi-dimensional array indexing on both the LHS and RHS side of expressions.
+  e.g., foo[i][j] = foo[i][j] + 1;
+- Added support for returning a struct from a function.
+- Added support for #download "filename" preprocessor command in NBC/NXC
+- Added support for import keyword in RICScript
+- Added support for struct "dot" notation, e.g., mydata[0].foo = 10; int x = mydata[0].foo;
+- Added support for "typedef struct" syntax
+- Added support for byte array to string assignment in NXC
+- Fixed bug in Random() API function
+- Added support for array math operation syntax in NXC, e.g., array += 2; array = !array, etc...
+- Fixed multi-line macro parsing bugs and problems with preprocessor directives mixed in 
+  with expressions.
+- Compiler is now compatible with both 1.0x firmwares and 1.2x firmwares.
+- Added API support for HiTechnic touch sensor multiplexer in NBC/NXC.
+- Added support for variadic macros.
+- Added support for macro redefinition (with warnings).
+- Added support for floats in NBC/NXC with 1.2x firmwares.
+- Improved support for unsigned long expressions.
+- Added API support for setting baud rate and mode of Hi Speed port with enhanced firmware.
+- Added API support for LEGO Color sensor
+- Fixed a preprocessor bug which broke nested #else statements
+- Added NXC API functions for enhanced firmware math opcodes (atan, ceil, exp, floor, tan, tanh, 
+  cosh, sinh, log, log10, atan2, pow, trunc, frac, muldiv32, cos, acos, sin, and asin)
+- Added NBC/NXC API support for HiTechnic EOPD sensor
+- Added firmware and NBC/NXC API support for reading/setting the display Contrast 
+  (SetDisplayContrast(byte contrast); and byte DisplayContrast(void);)
+- Added compiler optimization for constant shifts
+- Improved function prototype support
+- Added NXC API functions for enhanced firmware math opcodes (atand, tand, tanhd, 
+  acosd, cosd, coshd, asind, sind, sinhd, atan2d)
+- Added firmware version check when downloading compiled .rxe to NXT.
+- Level 2 optimization bug fixes
+- Cross platform fixes/64-bit support
+- Support for Array and UDT expressions in parameter passing.
+- Inline functions can now call other inline functions
+- const type arguments to inline functions can now be treated as a compile-time constant.
+- fixed a bug in the preprocessor for char type #defines (e.g., #define test 'c')
+- fixed a optimizer bug that was removing safecall mutexes that should not be removed
+- Added API support for HiTechnic IRSeeker 2 and Color 2 sensors
+- Added API functions to read I2C Version, VendorId, and DeviceId values
+- Added support for optional parameters using a not exactly C syntax (delphi-like)
+- fixed bug in structs containing arrays with more than one dimension.
+- fixed defects 2902670 & 2896265.
+  http://sourceforge.net/tracker/?func=detail&aid=2902670&group_id=68600&atid=521776
+  http://sourceforge.net/tracker/?func=detail&aid=2896265&group_id=68600&atid=521776
+- Added support for enum keyword
+- Added command-line parameter to specify preprocessor recursion max depth (default is 10)
+- Fixed defect 2908377.
+  http://sourceforge.net/tracker/?func=detail&aid=2908377&group_id=68600&atid=521776
+- Added support for struct member declaration using comma-separated variable names.
+- Fixed defect 2922394.
+  http://sourceforge.net/tracker/?func=detail&aid=2922394&group_id=68600&atid=521776
+- Added compiler status output to stdout.
+
+
+Version 1.0.1.b35
+-----------------
+- Exposed the bcd2dec API function in NXC.
+- Fixed a bug when whitespace separates open parenthesis and function name
+  e.g., y = mal2 (7);
+- Added support for bitwise negation (complement) in NXC using the ~ operator.
+  This requires the enhanced NBC/NXC firmware.
+- Added support for local array initialization in NXC.  Only single dimension 
+  arrays of non-aggregate types are supported.
+- Fixed a bug in the symbol table output where preprocessor declarations were
+  being erroneously stripped.
+- Fixed a line number reporting problem in NXC when using #include for non-system
+  header files.
+- Added .ric file decompilation to the NBC compiler.
+- Added support for new opcodes and system calls in the latest enhanced NBC/NXC
+  firmware.  The new system calls are FileFindFirst, FileFindNext, 
+  FileOpenWriteLinear, FileOpenWriteNonLinear, FileOpenReadLinear, 
+  CommHSControl, CommHSCheckStatus, CommHSWrite, and CommHSRead.  The new
+  opcodes are arrop, acos, asin, atan, ceil, exp, fabs, floor, sqrt, tan, 
+  tanh, cos, cosh, log, log10, sin, sinh, atan2, fmod, and pow.
+- Added support for all the Power Function modes via the HiTechnic iRLink I2C
+  device.  See the new HTPFComboDirect, HTPFSinglePin, HTPFSingleOutputCST, 
+  HTPFSingleOutputPWM, HTPFComboPWM, HTPFTrain, HTPFRawOutput, and HTPFRepeat 
+  NBC and NXC API functions.
+- Added support for the IR Train receiver via the HiTechnic iRLink I2C device.
+  See the new HTPFIRTrain NBC and NXC API functions.
+- Fixed bugs in unused variable removal and mutex removal.
+- Changed compiler to use -Z1 optimization as the default optimization level.
+- Added API functions to NBC and NXC for the Mindsensors pressure sensor, obstacle
+  sensor, acceleration/tilt sensor, distance sensor, play station sensor, and the
+  NRLink sensor with RCX, Power Function, and IR Train support.
+
+Version 1.0.1.b34
+-----------------
+- Fixes a typo bug in the math API functions introduced in b33.
+
+Version 1.0.1.b33
+-----------------
+- Fixes a bug in checking type compatibility when calling a function that
+  has an array of struct as an argument.
+- Fixes a bug in asm blocks containing a structure field reference that was
+  being improperly decorated by the compiler.
+- Fixes a bug in array assignment to a local array variable at the point of
+  declaration.
+- Adds stopthread, fmtnum, and priority opcodes to NBC & NXC using the enhanced
+  NBC/NXC firmware.
+- Fixed a typo bug in the SendRemoteString API macro.
+- Fixed a bug in NXC variable decoration and the NBC __I__ and __J__ substitution
+  parameters. Case insensitivity and underscores in the decoration scheme were
+  combining to break simple NXC int i; and int j; declarations.
+- Fixed a bug in deciding whether to emit a set or a mov operation in NXC.
+- Fixed a bug in the way NXC handled local variables going out of scope.
+- Fixed a bug where the left and right shift opcodes were not guarding against
+  invalid arguments which was resulting in an access violation.
+- Fixed a bug with semicolons following asm blocks when used in expressions.
+- Fixed a bug with SetSoundState in NBC & NXC caused by macro name clashes.
+- Fixed a bug with SetSoundFlags in NBC & NXC caused by a size type error.
+- Added API functions for HiTechnic devices.
+- Added API functions for mindsensors devices.
+- Added FlattenVar and UnFlattenVar API functions to NXC.
+- Added ResizeFile API function to NBC and NXC.
+- Fixed File Error! bug in left and right shift operations if the enhanced 
+  firmware is enabled.
+- Fixed a shift bug where if the output variable was a smaller type it was 
+  losing precision before the shift took place.
+- Added bcd2dec function to NBC and NXC.
+- Fixed an infinite loop compiler bug when the inline keyword occurs after 
+  the void keyword.
+- Fixed a compiler error line number reporting bug.
+- Changed compiler to write errors to stderr rather than stdout
+- Increased compilation speed for large programs
+- Complete overhaul of IOMAP-based API functions to support variable-based
+  IOMAP offsets in NXC and NBC.
+
+Version 1.0.1.b32
+-----------------
+- Fixes a couple NXC system call structure definition bugs.
+- Adds compchktype compile-time opcode for checking variable types in preprocessor 
+  macros.
+- Changes low-level NXC syscall inline functions to use preprocessor macros with
+  type checking instead (for improved code efficiency).
+- Fixes an access violation when trying to compile user-defined type references
+  which include invalid member names.
+- Allows array opcodes to take constant array arguments
+- Reworked low level IOMap read and write NXC API functions to allow non-constant
+  arguments for ports, etc...
+- Fixed a bug in RotateMotor functions which can cause it to hang if another task
+  changes the power level while the function is waiting for the target tacho limit
+  to be reached.
+- Fixed a bug in I2CBytes and SensorUS and the NBC equivalents which made the
+  functions not work for constant port values for ports 3 and 4.
+- Fixes a bug in variable and parameter name decoration which made task & function 
+  names containing an underscore not work correctly in some situations.
+- Fixes a bug in argument passing to array, struct, and reference type parameters. 
+  The compiler was failing to raise an error when expressions are used in these
+  cases.
+
+Version 1.0.1.b31
+-----------------
+- Fixes a boolean expression bug which occurred when you used a numeric variable 
+  or constant on its own in a logical AND operation. (e.g., if (Nsamps && x < 3)).
+- Fixes problems with reference type arguments that are arrays or user-defined 
+  types.
+- Fixes problems where the compiler hangs while processing function parameters.
+- Fixes several other struct and array parameter passing problems.
+- Fixes NXTDefs.h typo bug in ResetAllTachoCounts.
+- Fixes NXCDefs.h typo bug in I2CStatus.
+- Tightened up semicolon checking so that the parser complains when they are 
+  required but they are missing.
+- Fixed global array initialize when a length expression is specified and an
+  initial value is also specified.  The length, in that case, is now ignored
+  since the array is statically initialized.
+- Fixed a problem with initializing multi-dimensional global or local arrays
+  where the generated nested variable type declaration was causing an NBC 
+  compiler error.
+- Improved parsing of open and close parenthesis so that the compiler will
+  complain if you have an extra close parenthesis.
+- Added code in the NXC compiler to initialize a hidden graphic variables
+  array and use it when calling the GraphicOut API function so that 
+  parameterized RIC files can be drawn using either GraphicOut or GraphicOutEx.
+- Added support in NBC for RICScript programs which can be used to create
+  RIC files via a simple text programming language.  A source file with a .rs
+  extension will use the RICScript compiler built into NBC and the output will
+  be a .ric file if there are no compiler errors.
+- Adds the "safecall" keyword to NXC.  A function or subroutine declared with
+  this keyword will automatically be wrapped in Acquire/Release with a global 
+  mutex specific to that function so that multiple threads can safely call the 
+  function without hanging.
+- Adds the -safecall command line switch for NXC.  If a program is compiled with
+  this switch on the command line then all function calls will use the safecall
+  calling convention, i.e., they will be wrapped in Acquire/Release so that
+  multiple tasks/threads can share the subroutine safely.
+- Fixes inline functions so that they are now thread-safe.
+- Added code to the parser to complain about recursive function calls 
+  since they are not supported by the NXT firmware.
+- Added code to the parser to complain about calling an inline function from
+  another inline function call.
+- Fixed a for-loop local variable nesting level bug that made for-loop variables
+  not work correctly if defined within the for-loop parenthesis.
+- Added NXC/NBC API function I2CCheckStatus and LowspeedCheckStatus which only 
+  return the status (and not bytes ready).  Added I2CBytesReady and 
+  LowspeedBytesReady which only return the number of bytes ready but not the 
+  status. (NBC does not include the I2C alias versions).
+- Added constants and structure declarations for enhanced firmware features
+  in lms_arm_jch.zip.  If using the enhanced standard NXT firmware make sure
+  to pass -EF on the NBC/NXC command line.
+- Fixes a bug in struct declarations which was causing the compiler to not 
+  support types with the "unsigned" type qualifier keyword prior to the type 
+  name.
+- Added several low-level syscall inline functions to NXC.
+- Fixed type checking of function parameters that are user-defined types.
+  This had just been checking that the variable passed in was a UDT but it
+  now makes sure the two types of UDT are the same.
+
+Version 1.0.1.b30
+-----------------
+- Fixes a bug in the RotateMotorExPID macro in NXTDefs.h that was introduced
+  in b29.
+- Fixes error message line number problems in NBC that were introduced in b29.
+- Added NXC compiler error message when trying to use nested calls to the same
+  function (e.g., Max(3, Max(5, 6)).
+- Fixes an expression optimizer bug which was intrepeting variables that looked
+  like valid hexadecimal numbers as a constant value (e.g., xa0, x1, x03, xff).
+- Fixes a bug in the NXC compiler's support for function prototypes that was
+  introduced in b29.
+- Adds support in NXC for the "return" statement to have optional parenthesis
+  around the return expression when the return type is string.  Scalar types already
+  support surrounding parenthesis as part of the expression parsing.
+- Fixes a bug in the NBC compiler support for compif/compelse/compend where
+  code that should have been ignored by the compiler was not being ignored.
+- Fixes a bug in ## handling within non-parameterized preprocessor macros.
+- *** NXC & NBC BREAKING CHANGE *** Changed the RotateMotorEx API functions 
+  (in b29, actually) to take an additional boolean parameter.
+    RotateMotorExPID(ports, pwr, angle, turnpct, bsync, bStop, p, i, d) 
+    RotateMotorEx(ports, pwr, angle, turnpct, bSync, bStop)
+  The new "bStop" parameter indicates whether you want the motors to come to a 
+  hard stop at the end of the specified angle of rotation.
+- Fixes NXC bug with empty strings causing a compiler error.  Now empty strings
+  work as expected.
+
+
+Version 1.0.1.b29
+-----------------
+- Fixes a bug with not setting the left hand side datatype correctly after
+  a user defined type is used.
+
+- Fixes reading a struct out of an array of struct.
+
+- Fixes a bug in NXC switch statements that have no default case where the 
+  first case was being improperly executed.
+
+- Fixes a bug with initialized globals which was causing them to be treated as constants
+  in math expressions.
+
+- Overhauled the I2C routines and the Motor routines.  The old OUT_AB, OUT_AC,
+  OUT_BC, and OUT_ABC array variables are now constants.  The motor API functions
+  are now thread-safe and blocking on the motor resource(s) requested.  If you call
+  RotateMotor(OUT_AB, 75, 3600) then no other thread will be able to control motors
+  A and B until the already executing RotateMotor function finishes.  But now you
+  can safely call RotateMotor(OUT_A, 75, 3600) on one thread and RotateMotor(OUT_B,
+  75, 720) on another simultaneously executing thread without having program errors
+  or erratic motor behavior.  The same sort of revisions occurred for the Lowspeed
+  (aka I2C) routines so that it is now safe to call I2C functions for a port on one 
+  thread while calling I2C functions for a different port on another thread.  Since
+  the functions do not know at compile time which port is being utilized when you 
+  use a variable as the port parameter, the RotateMotor functions acquire all three 
+  motor port resources for the duration of their operation in that case.  So you can 
+  safely call RotateMotor using a variable for the port parameter on two 
+  simultaneously executing threads but one of the two calls will be blocked until
+  the first one has completed executing.
+
+- Added GraphicOutEx for NXC which takes an array of values which can change the
+  drawing behavior at runtime.
+
+- Changed NumOut and TextOut in NXC so they accept an optional 4th argument (cls)
+  which controls whether the screen is cleared or not.  This makes these functions
+  consistant with the other drawing routines.
+
+- Changed NumOutEx and TextOutEx in NBC so that the cls argument is the fourth
+  argument rather than the third argument (NumOutEx(x, y, value, cls) rather than
+  NumOutEx(x, y, cls, value)).  This change makes these two functions consistant
+  with the other Ex drawing routines in NBC.
+
+- Changed ArrayBuild in NXC so that instead of having ArrayBuild1..ArrayBuild4
+  defined in the NXCDefs.h header file the function is now built into the compiler
+  and it can take any number of source arguments.  
+  E.G., ArrayBuild(aout, src1, ..., srcN);
+
+- Fixed a problem in the NXC preprocessor where it was incorrectly handling char
+  constants (e.g., ArrayInit(aout, 'a', 10);).
+
+- Fixed a problem in I2CBytes/ReadI2CBytes where it was returning true even when
+  an error occurred during the write/read operation.  Now these functions return
+  false if any sort of error condition occurred during the I2C operation.
+
+- Added new NXC functions which are aliases for the LowspeedStatus, LowspeedRead, and
+  LowspeedWrite functions.  The new NXC functions are named I2CStatus, I2CRead, and
+  I2CWrite.
+
+- Changed the behavior of the ## operator in the preprocessor.  In previous versions
+  a token such as OUT_A would be left as a literal if it was concatenated with the
+  preceding value but in this version OUT_A will be evaluated as 0 before it is
+  concatenated with the preceding value.  E.G., myVar##port, in previous releases 
+  would have ended up as myVarOUT_A, but as of b29 it will end up as myVar0.
+
+- Changed the preprocessor to evaluate tokens until no changes occur during 
+  evaluation.  As of b29 if the first preprocessor evaluation produces __rotateMotor0
+  as a token then it will evaluate the result again which may expand that token
+  into a multi-line macro function expansion.  This will continue until the pre-
+  evaluation value matches the post-evaluation value.  This change was required to
+  implement the motor and I2C API changes mentioned above.
+
+- Changed the compiler to automatically include NXTDefs.h or NXCDefs.h (and 
+  NBCCommon.h) automatically just as NQC would automatically include its API header
+  file.  This can be disabled via the new -n command line switch.  The header
+  files are actually compiled into the compiler executable.  The contents of the
+  built-in header files can be extracted via the new -api command line switch.  As
+  a result of this change it is no longer necessary to start an NBC or NXC program
+  with #include "NXTDefs.h" or #include "NXCDefs.h".
+
+- Renamed the Tamas Sorosy math functions added in b28 so that they do not conflict
+  with the compile-time expression evaluator functions of the same names.  The
+  new function names are Sqrt, Sin, Cos, Asin, and Acos.
+
+- Added a -q command line switch which tells the compiler to not make the NXT beep
+  at the end of a program download operation.
+
+- Changed the compiler so that, by default, it tells the NXT to beep after 
+  downloading a program.
+
+- Changed the compiler so that it stops any running program before starting to
+  download a program.
+
+- Added compif, compelse, and compend operations to the NBC compiler so that it
+  can determine at compile-time whether to ignore or include certain blocks
+  of code.  This compiler processing occurs after the preprocessor is finished.
+
+- Fixed the NXC function parameter parser so that if an error occurs while
+  parsing the parameter declarations it will abort and skip to the closing 
+  parenthesis.  This had been a place where the parser could get into an
+  infinite loop prior to this change.
+
+
+Version 1.0.1.b28
+-----------------
+- Adds support for structs and typedefs. See struct.nxc for examples.
+- Adds Tamas Sorosy math functions (sqrt, sin, cos, asin, acos) to NBC 
+  and NXC API.
+- Adds a 15 ms wait in ReadSensorUS (NBC) and SensorUS (NXC) to fix a problem
+  where when called in a tight loop a manual wait was needed to get correct
+  readings.
+- Adds preprocessor support for #if, #elif, and #error.
+- Adds support for alternate NXT firmwares which implement the wait and waitv 
+  opcodes. Use the -EF switch to enable this feature.
+- Adds support for short-circuit boolean expression evaluation (for && and || 
+  operators)
+- Adds a workaround in NXC for a firmware bug in the "set" opcode which is 
+  triggered by setting a signed long to a negative number.
+- Fixes a preprocessor bug with nested #ifdefs.
+- Fixes a preprocessor bug with nested function macros with empty parameter
+  lists.
+- Fixes an optimizer bug which was generating bad code for the sign opcode.
+- The NXC compiler now accepts (void) in addition to () for task declarations.
+- The NXC compiler now outputs an error if the routine named "main" is declared 
+  using a keyword other than "task".
+
+
+Version 1.0.1.b27
+-----------------
+- Adds pre-increment and pre-decrement (++i, --i) support.
+- Adds support for expressions as statements 
+    task main() { int i=23; 0x3f; +3-i; }
+- Adds support for pre- and post-increment/decrement within expressions 
+  (such as in array indexes).  Increment/decrement used to only be
+  allowed in a statement.
+- Fixes some string array indexing bugs
+- Adds support for string expressions within TextOut API function
+- *** NXC BREAKING CHANGE *** Removed the "cls" argument from the NumOut and
+  TextOut functions.  To update your code to work with beta 27 you will need 
+  to add calls to ClearScreen() wherever you previously passed "true" to this 
+  argument and remove the additional argument from each call to one of 
+  these API functions.  The PointOut, CircleOut, LineOut, RectOut, and GraphicOut 
+  API functions all now take cls as an optional argument with a default value of
+  false.  Since this argument is optional it can still be used but if you 
+  are currently passing "false" to these functions you can now remove the extra
+  argument.
+- *** NBC BREAKING CHANGE *** Removed the "cls" argument from the NumOut, TextOut,
+  PointOut, CircleOut, LineOut, RectOut, and GraphicOut functions.  Added NumOutEx,
+  TextOutEx, PointOutEx, CircleOutEx, LineOutEx, RectOutEx, and GraphicOutEx API
+  functions which all include the "cls" argument exactly as the non-Ex versions 
+  did prior to beta 27.  To update your code to work with beta 27 you will need 
+  to either add calls to ClearScreen() wherever you previously passed "true" to this 
+  argument and remove the additional argument from each call to one of the non-Ex 
+  API functions OR you can replace your calls to the non-Ex version with calls to 
+  the Ex version of the API function.
+- Adds -w- and -w+ command line switches which let you control whether
+  the compiler outputs warning messages or not.  The default is - which
+  means that warnings are not output.  If you want to turn on warnings then
+  add the new -w+ switch to the command line.
+- Fixes a mutex optimization bug which was incorrectly removing acquire/release
+  statements and mutex variables.
+
+
+Version 1.0.1.b26
+-----------------
+- Fixes an array indexing bug introduced in b25
+- Fixes a local variable declaration bug introduced in b25
+- Fixes a bug in the NXC and NBC Read API functions
+- Fixes a bug in the NXC and NBC WriteLnString API function
+- Adds support for asm block statements anywhere within an NXC file (not 
+  just within a task or subroutine)
+- Adds a ReadLnString API function to NBC and NXC
+- Fixes a preprocessor bug where comments following a #include statement were 
+  breaking the include
+
+
+Version 1.0.1.b25
+-----------------
+- Fixes string whitespace bug introduced in b22
+- Fixes division bug where 1st operand is negative and 2nd operand is unsigned
+- Fixes bugs in the NBC and NXC file I/O macros
+- Adds support in NXC for string indexing
+    string msg = "test"; 
+    msg[0] = 'C'; 
+    byte x = msg[2];
+- Adds support in NXC for inline functions
+    inline int Double(const int x) { return x*2; }
+- Adds support in NXC for const and reference function argument types
+    inline bool IsFooBar(int x, int &handle) { handle = 10; x = x+1; return x > 2; }
+- Adds support in NXC for const variable declarations
+    const int myVar = 12; // myVar cannot be changed.
+- Adds support in NXC for arrays of strings
+    string myStrings[];
+    ArrayInit(myStrings, "", 4); // set array of strings to a size of 4 (0..3)
+    myStrings[0] = "please work";
+    myStrings[1] = "testing";
+- Improves NXC parameter type checking in function calls
+- Adds NBC API macros to simplify NXT<->NXT bluetooth communication
+    ReceiveRemoteBool(queue, clear, bval, result)
+    ReceiveRemoteNumber(queue, clear, val, result)
+    ReceiveRemoteString(queue, clear, str, result)
+    ReceiveRemoteMessageEx(queue, clear, str, val, bval, result)
+    SendRemoteBool(conn, queue, bval, result)
+    SendRemoteNumber(conn, queue, val, result)
+    SendRemoteString(conn, queue, str, result)
+    SendResponseBool(queue, bval, result)
+    SendResponseNumber(queue, val, result)
+    SendResponseString(queue, msg, result)
+- Adds NBC API macros for sending direct commands to another NXT
+    RemoteMessageRead(conn, queue, result)
+    RemoteMessageWrite(conn, queue, msg, result) // alias for SendRemoteString
+    RemoteStartProgram(conn, filename, result)
+    RemoteStopProgram(conn, result)
+    RemotePlaySoundFile(conn, filename, bloop, result)
+    RemotePlayTone(conn, frequency, duration, result)
+    RemoteStopSound(conn, result)
+    RemoteKeepAlive(conn, result)
+    RemoteResetScaledValue(conn, port, result)
+    RemoteResetMotorPosition(conn, port, brelative, result)
+    RemoteSetInputMode(conn, port, type, mode, result)
+    RemoteSetOutputState(conn, port, speed, mode, regmode, turnpct, runstate, tacholimit, result)
+- Adds NXC API macros to simplify NXT<->NXT bluetooth communication
+    result = ReceiveRemoteBool(queue, clear, bval)
+    result = ReceiveRemoteNumber(queue, clear, val)
+    result = ReceiveRemoteString(queue, clear, str)
+    result = ReceiveRemoteMessageEx(queue, clear, str, val, bval)
+    result = SendRemoteBool(conn, queue, bval)
+    result = SendRemoteNumber(conn, queue, val)
+    result = SendRemoteString(conn, queue, str)
+    result = SendResponseBool(queue, bval)
+    result = SendResponseNumber(queue, val)
+    result = SendResponseString(queue, msg)
+- Adds NXC API macros for sending direct commands to another NXT
+    result = RemoteMessageRead(conn, queue)
+    result = RemoteMessageWrite(conn, queue, msg) // alias for SendRemoteString
+    result = RemoteStartProgram(conn, filename)
+    result = RemoteStopProgram(conn)
+    result = RemotePlaySoundFile(conn, filename, bloop)
+    result = RemotePlayTone(conn, frequency, duration)
+    result = RemoteStopSound(conn)
+    result = RemoteKeepAlive(conn)
+    result = RemoteResetScaledValue(conn, port)
+    result = RemoteResetMotorPosition(conn, port, brelative)
+    result = RemoteSetInputMode(conn, port, type, mode)
+    result = RemoteSetOutputState(conn, port, speed, mode, regmode, turnpct, runstate, tacholimit)
+
+
+Version 1.0.1.b24
+-----------------
+- Fixes a preprocessor bug in NBC and NXC that is triggered by not having a ')'
+  at the end of a macro invocation (or anywhere following in the entire program).
+- Replaced the ResetMotor macros in NBC and NXC with the following macros:
+    ResetTachoCount(p)
+    ResetBlockTachoCount(p)
+    ResetRotationCount(p)
+    ResetAllTachoCounts(p)
+- Added NBC API file i/o macros
+    Read(handle, n, result)
+    ReadLn(handle, n, result)
+    ReadBytes(handle, len, buf, result)
+    Write(handle, n, result)
+    WriteLn(handle, n, result)
+    WriteString(handle, str, cnt, result)
+    WriteLnString(handle, str, cnt, result)
+    WriteBytes(handle, buf, cnt, result)
+    WriteBytesEx(handle, len, buf, result)
+- Added NXC API file i/o macros
+    result = Read(handle, n)
+    result = ReadLn(handle, n)
+    result = ReadBytes(handle, len, buf)
+    result = Write(handle, n)
+    result = WriteLn(handle, n)
+    result = WriteString(handle, str, cnt)
+    result = WriteLnString(handle, str, cnt)
+    result = WriteBytes(handle, buf, cnt)
+    result = WriteBytesEx(handle, len, buf)
+- Replaced the code underlying the ReadSensorUS (NBC) and SensorUS (NXC) API 
+  functions with a version which appears to be more reliable (and generic).
+- Added NBC and NXC API functions to give control over reseting rotation counters
+    CoastEx(ports, reset)
+    OffEx(ports, reset)
+    OnFwdEx(ports, pwr, reset)
+    OnRevEx(ports, pwr, reset)
+    OnFwdRegEx(ports, pwr, regmode, reset) 
+    OnRevRegEx(ports, pwr, regmode, reset)
+    OnFwdSyncEx(ports, pwr, turnpct, reset) 
+    OnRevSyncEx(ports, pwr, turnpct, reset)
+- Added NBC and NXC constants for the "Ex" motor functions
+    RESET_NONE
+    RESET_COUNT
+    RESET_BLOCK_COUNT
+    RESET_ROTATION_COUNT
+    RESET_BLOCKANDTACHO
+    RESET_ALL
+- Added NBC and NXC API functions which expose the PID parameters
+    RotateMotorPID(ports, pwr, angle, p, i, d)
+    RotateMotorExPID(ports, pwr, angle, turnpct, bsync, p, i, d) 
+- Added NBC and NXC API function for clearing the screen
+    ClearScreen()
+- Added support in the NXC SetOutput function for multiple sets of field/value pairs
+    SetOutput(ports, const field1, value1, ..., const fieldN, valueN)
+- Added generic I2C read/write routine for NBC
+    ReadI2CBytes(port, inbuf, count, outbuf, result)
+- Added generic I2C read/write routine for NXC
+    result = I2CBytes(port, inbuf, count, outbuf)
+- Added NBC pseudo opcode to spawn a thread anywhere within the current thread
+    start TaskName
+- Added NXC start statement (ala NQC)
+    start TaskName;
+
+
+Version 1.0.1.b23
+-----------------
+- Adds support in NXC for nested switch statements
+- Adds support in NXC for array indexed math assignments (e.g., x[0] += 23;)
+- Adds support in NXC for using true and false in asm blocks
+- Adds support in NXC for local variable declarations anywhere within a function.
+  Local variable declarations used to be limited to the beginning of a function
+  block.  Locals now honor nesting levels and go out of scope if they are declared
+  within a block statement.  "for" loops can now declare a local or use an existing 
+  variable:
+  
+    for (i = 10; i > 0; i--) {} // i must already be in scope
+    for (int i = 0; i < 10; i++) {} // i has scope limited to for loop
+
+- Adds support in NXC for empty for loop (e.g., for ( ; ; ) ) for infinite loops
+- Adds support in NXC for scalar and string local (not global) variable 
+  initialization via expressions of any form (not just constants):
+
+    int i = Random(10);     
+    string msg = NumToStr(i);
+
+- Adds support in NXC for single-dimension global variable array initialization
+  using a syntax like array initialization in NBC:
+
+    // initialize X to 20 elements all equal to 1.
+    int X[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+
+
+- Adds support in NXC for expression optimizations (enabled with -Z1)
+- Fixes indexing of local arrays (used to only work with globals)
+- Fixes a bug in the NBC sign, shl, and shr opcodes which was triggered
+  by passing the same variable as the first and last arguments:
+  
+    sign x, x
+    shl x, y, x
+    shr x, y, x
+
+
+
+Version 1.0.1.b22
+-----------------
+- Adds support in NXC switch statements for strings, constant expressions, 
+  character constants, and the true and false keywords
+- Adds support in NBC for strings delimited by double quote characters
+- Fixes several motor macros in NBC/NXC so that they reset the block count 
+  before executing when it is appropriate for them to do so
+- Fixes NXC ForceOff macro in NXCDefs.h
+- Fixes the RotateMotor/RotateMotorEx macros so that programs no longer
+  hang when the angle is set to zero
+- Fixes a problem in expressions which were not properly setting the zero
+  flag register variable if in a sub-expression it had already been set
+
+- NOTE: the SENSOR_n macros mentioned below are not exactly the same
+  as in NQC.  They cannot be used to specify the sensor port.  Instead you
+  should use S1..S4 or IN_1..IN_4.
+
+
+
+Version 1.0.1.b21
+-----------------
+- Adds NXC API macro ResetMotor(ports) 
+- Adds support in NXC for the ?: expression
+- Adds support in NXC for the switch statement
+- Adds the following NQC compatibility macros in NXCDefs.h:
+    S1
+    S2
+    S3
+    S4
+    SENSOR_1
+    SENSOR_2
+    SENSOR_3
+    SENSOR_4
+    SENSOR_TYPE_NONE
+    SENSOR_TYPE_TOUCH
+    SENSOR_TYPE_TEMPERATURE
+    SENSOR_TYPE_LIGHT
+    SENSOR_TYPE_ROTATION
+    SENSOR_TYPE_LIGHT_ACTIVE
+    SENSOR_TYPE_LIGHT_INACTIVE
+    SENSOR_TYPE_SOUND_DB
+    SENSOR_TYPE_SOUND_DBA
+    SENSOR_TYPE_CUSTOM
+    SENSOR_TYPE_LOWSPEED
+    SENSOR_TYPE_LOWSPEED_9V
+    SENSOR_TYPE_HIGHSPEED
+    SENSOR_MODE_RAW
+    SENSOR_MODE_BOOL
+    SENSOR_MODE_EDGE
+    SENSOR_MODE_PULSE
+    SENSOR_MODE_PERCENT
+    SENSOR_MODE_CELSIUS
+    SENSOR_MODE_FAHRENHEIT
+    SENSOR_MODE_ROTATION
+    SENSOR_TOUCH
+    SENSOR_LIGHT
+    SENSOR_ROTATION
+    SENSOR_CELSIUS
+    SENSOR_FAHRENHEIT
+    SENSOR_PULSE
+    SENSOR_EDGE
+    SetSensor(sensor, tm)
+- Fixes an NXC shift right and shift left bug introduced in b20.
+- Fixes an NXC macro subsitution bug in the "until" macro.
+- Modifies GetOutput and GetInput API functions so that the port parameter no
+  longer accepts an expression (must be a variable or constant value)
+
+Version 1.0.1.b20
+-----------------
+- Adds support in NXC for string comparisons (==, !=, <=, >=, <, >)
+- Adds support in NXC for function return types (int, bool, char, byte, short, long,
+  unsigned versions of same, and string)
+- Adds support in NXC for "void" functions (synonymous with "sub").
+- Adds support in NXC for comma-separated assignments in for loops.
+- Fixes an NXC bug in | and ^ expressions which was putting the parser into an
+  infinite loop.
+- Fixes an NXC bug in the subroutine calling mechanism which is triggered by leaving
+  off the () characters when calling the subroutine.  It was causing an infinite
+  parser loop.
+- Fixes an NXC bug in relational expressions which were not setting the main register
+  to a boolean value.
+
+
+Version 1.0.1.b19
+-----------------
+- Fixes a command-line bug which could cause NXC source code to be overwritten with
+  the generated NBC code.  This bug is triggered in b18 and b17 if you use BricxCC
+  to download an NXC program and you exit BricxCC without saving the contents of the 
+  editor window to its underlying source file (which has had its contents replaced 
+  with NBC assembler code).
+
+
+Version 1.0.1.b18
+-----------------
+- Fixes a bug in the GraphicOut macro in NXTDefs.h (for NBC and NXC)
+- Fixes a bug in the ArrayInit macro in NXCDefs.h - swapped parameter order as well
+    ArrayInit(a, val, cnt)
+- Removes a few compiler hints for a cleaner compile
+- Adds support for multi-line macro invocation (with support for embedded comments 
+  and arbitrary whitespace)
+- Moves ## handling into preprocessor so that macro expansion more closely matches C
+- Fixes NXC preprocessor bug related to ## handling (it was causing an infinite loop)
+- Adds support for variable initialization via constant expression.
+- Improves error message line number handling (it's still not perfect but it is much 
+  better)
+- Adds mutex optimization (automatically removes acquire/release and mutex declarations 
+  if the application is single-threaded)
+
+
+Version 1.0.1.b17
+-----------------
+- Fixes a problem in the SetSoundState macro in NXTDefs.h and NXCDefs.h.  
+- Fixes a few local variable and parameter decoration problems.
+- Fixes a missing file in the source distribution.
+
+
+Version 1.0.1.b16
+-----------------
+- Refactors the NXC API to use macros for many of the API functions (See NXCDefs.h)
+  Macros in NXC may use an "asm" block with tokens for temporary variables of different
+  types and return values of different types.
+- Fixes another bug in NBC with nested preprocessor macro function calls.
+    (e.g., until(ButtonPressed(BTN1, true)) ; )
+  The fix in b15 did not completely fix the problem (it only handled single argument
+  nested macros - or, more precisely, nested macros without any whitespace in their 
+  argument list). 
+- Fixes a problem with BatteryLevel and FreeMemory in the NXC API where I had renamed 
+  the underlying NBC macros and failed to change the code generator in NXC.
+- Adds the missing '%' (modulo) operator for expressions in NXC.
+- Renames NXC API functions ReadSensor(p) and ReadSensorUS(p) as Sensor(p) and 
+  SensorUS(p) respectively
+- Renames NXC API functions GetTick() as CurrentTick() and GetFirstTick() as FirstTick().
+- Renames NXC API function SetSensorUltrasonic(p) as SetSensorLowspeed(p).
+- Adds initial support for NXC array types.  Adding [] pairs after the variable name in
+  a variable declaration defines the variable as an array of the specified type.
+  e.g., byte x[]; // x is an array of byte
+  Array initialization is not yet supported.
+- Added NXC support for array/string subscripting (e.g., buf[0] = 23; msg[4] = "fred";
+- Added NXC support for local variables and subroutine parameters (no return values yet) 
+  Local variables must be defined prior to any other statements in a task or subroutine.
+- Added many NXC API macros to NXCDefs.h:
+    ByteArrayToStr(a, s)
+    StrToByteArray(s, a)
+    ArrayLen(a)
+    ArrayInit(a, cnt, val)
+    GetLSInputBuffer(p, offset, cnt, data)
+    GetLSOutputBuffer(p, offset, cnt, data)
+    GetDisplayNormal(x, line, cnt, data)
+    GetDisplayPopup(x, line, cnt, data)
+    GetBTInputBuffer(offset, cnt, data)
+    GetBTOutputBuffer(offset, cnt, data)
+    GetHSInputBuffer(offset, cnt, data)
+    GetHSOutputBuffer(offset, cnt, data)
+    GetUSBInputBuffer(offset, cnt, data)
+    GetUSBOutputBuffer(offset, cnt, data)
+    GetUSBPollBuffer(offset, cnt, data)
+    BTDeviceName(p)
+    BTConnectionName(p)
+    BTConnectionPinCode(p)
+    BrickDataName()
+    GetBTDeviceAddress(p, data)
+    GetBTConnectionAddress(p, data)
+    GetBrickDataAddress(data)
+    SoundFrequency()
+    SoundDuration()
+    SoundSampleRate()
+    SoundMode()
+    SoundVolume()
+    ButtonPressCount(b)
+    ButtonLongPressCount(b)
+    ButtonShortReleaseCount(b)
+    ButtonLongReleaseCount(b)
+    ButtonReleaseCount(b)
+    ButtonState(b)
+    CommandFlags()
+    UIState()
+    UIButton()
+    VMRunState()
+    BatteryState()
+    BluetoothState()
+    UsbState()
+    SleepTimeout()
+    SleepTimer()
+    RechargeableBattery()
+    Volume()
+    OnBrickProgramPointer()
+    CustomSensorZeroOffset(p)
+    CustomSensorPercentFullScale(p)
+    CustomSensorActiveStatus(p)
+    SensorBoolean(p)
+    SensorDigiPinsDirection(p)
+    SensorDigiPinsStatus(p)
+    SensorDigiPinsOutputLevel(p)
+    MotorPwnFreq()
+    LSInputBufferInPtr(p)
+    LSInputBufferOutPtr(p)
+    LSInputBufferBytesToRx(p)
+    LSOutputBufferInPtr(p)
+    LSOutputBufferOutPtr(p)
+    LSOutputBufferBytesToRx(p)
+    LSMode(p)
+    LSChannelState(p)
+    LSErrorType(p)
+    LSState()
+    LSSpeed()
+    DisplayEraseMask()
+    DisplayUpdateMask()
+    DisplayDisplay()
+    DisplayFlags()
+    DisplayTextLinesCenterFlags()
+    BTDeviceClass(p)
+    BTDeviceStatus(p)
+    BTConnectionClass(p)
+    BTConnectionHandleNum(p)
+    BTConnectionStreamStatus(p)
+    BTConnectionLinkQuality(p)
+    BrickDataBluecoreVersion()
+    BrickDataBtStateStatus()
+    BrickDataBtHardwareStatus()
+    BrickDataTimeoutValue()
+    BTInputBufferInPtr()
+    BTInputBufferOutPtr()
+    BTOutputBufferInPtr()
+    BTOutputBufferOutPtr()
+    HSInputBufferInPtr()
+    HSInputBufferOutPtr()
+    HSOutputBufferInPtr()
+    HSOutputBufferOutPtr()
+    USBInputBufferInPtr()
+    USBInputBufferOutPtr()
+    USBOutputBufferInPtr()
+    USBOutputBufferOutPtr()
+    USBPollBufferInPtr()
+    USBPollBufferOutPtr()
+    BTDeviceCount()
+    BTDeviceNameCount()
+    HSFlags()
+    HSSpeed()
+    HSState()
+    USBState()
+    SetSoundFrequency(n)
+    SetSoundDuration(n)
+    SetSoundSampleRate(n)
+    SetSoundFlags(n)
+    SetSoundState(n)
+    SetSoundMode(n)
+    SetSoundVolume(n)
+    SetButtonPressCount(b, n)
+    SetButtonLongPressCount(b, n)
+    SetButtonShortReleaseCount(b, n)
+    SetButtonLongReleaseCount(b, n)
+    SetButtonReleaseCount(b, n)
+    SetButtonState(b, n)
+    SetCommandFlags(n)
+    SetUIState(n)
+    SetUIButton(n)
+    SetVMRunState(n)
+    SetBatteryState(n)
+    SetBluetoothState(n)
+    SetUsbState(n)
+    SetSleepTimeout(n)
+    SetSleepTimer(n)
+    SetVolume(n)
+    SetOnBrickProgramPointer(n)
+    ForceOff(n)
+    SetInCustomZeroOffset(p, n)
+    SetInSensorBoolean(p, n)
+    SetInDigiPinsDirection(p, n)
+    SetInDigiPinsStatus(p, n)
+    SetInDigiPinsOutputLevel(p, n)
+    SetInCustomPercentFullScale(p, n)
+    SetInCustomActiveStatus(p, n)
+    SetOutPwnFreq(n)
+    SetLSInputBuffer(p, offset, cnt, data)
+    SetLSInputBufferInPtr(p, n)
+    SetLSInputBufferOutPtr(p, n)
+    SetLSInputBufferBytesToRx(p, n)
+    SetLSOutputBuffer(p, offset, cnt, data)
+    SetLSOutputBufferInPtr(p, n)
+    SetLSOutputBufferOutPtr(p, n)
+    SetLSOutputBufferBytesToRx(p, n)
+    SetLSMode(p, n)
+    SetLSChannelState(p, n)
+    SetLSErrorType(p, n)
+    SetLSState(n)
+    SetLSSpeed(n)
+    SetDisplayEraseMask(n)
+    SetDisplayUpdateMask(n)
+    SetDisplayDisplay(n)
+    SetDisplayFlags(n)
+    SetDisplayTextLinesCenterFlags(n)
+    SetDisplayNormal(x, line, cnt, data)
+    SetDisplayPopup(x, line, cnt, data)
+    SetBTDeviceName(p, str)
+    SetBTDeviceAddress(p, addr)
+    SetBTConnectionName(p, str)
+    SetBTConnectionPinCode(p, code)
+    SetBTConnectionAddress(p, addr)
+    SetBrickDataName(str)
+    SetBrickDataAddress(p, addr)
+    SetBTDeviceClass(p, n)
+    SetBTDeviceStatus(p, n)
+    SetBTConnectionClass(p, n)
+    SetBTConnectionHandleNum(p, n)
+    SetBTConnectionStreamStatus(p, n)
+    SetBTConnectionLinkQuality(p, n)
+    SetBrickDataBluecoreVersion(n)
+    SetBrickDataBtStateStatus(n)
+    SetBrickDataBtHardwareStatus(n)
+    SetBrickDataTimeoutValue(n)
+    SetBTInputBuffer(offset, cnt, data)
+    SetBTInputBufferInPtr(n)
+    SetBTInputBufferOutPtr(n)
+    SetBTOutputBuffer(offset, cnt, data)
+    SetBTOutputBufferInPtr(n)
+    SetBTOutputBufferOutPtr(n)
+    SetHSInputBuffer(offset, cnt, data)
+    SetHSInputBufferInPtr(n)
+    SetHSInputBufferOutPtr(n)
+    SetHSOutputBuffer(offset, cnt, data)
+    SetHSOutputBufferInPtr(n)
+    SetHSOutputBufferOutPtr(n)
+    SetUSBInputBuffer(offset, cnt, data)
+    SetUSBInputBufferInPtr(n)
+    SetUSBInputBufferOutPtr(n)
+    SetUSBOutputBuffer(offset, cnt, data)
+    SetUSBOutputBufferInPtr(n)
+    SetUSBOutputBufferOutPtr(n)
+    SetUSBPollBuffer(offset, cnt, data)
+    SetUSBPollBufferInPtr(n)
+    SetUSBPollBufferOutPtr(n)
+    SetBTDeviceCount(n)
+    SetBTDeviceNameCount(n)
+    SetHSFlags(n)
+    SetHSSpeed(n)
+    SetHSState(n)
+    SetUSBState(n)
+    CreateFile(fname, fsize, handle)
+    OpenFileAppend(fname, fsize, handle)
+    OpenFileRead(fname, fsize, handle)
+    CloseFile(handle)
+    ResolveHandle(fname, handle, writeable)
+    RenameFile(oldname, newname)
+    DeleteFile(fname)
+    SendMessage(queue, msg)
+    ReceiveMessage(queue, clear, msg)
+    LowspeedStatus(port, bready)
+    LowspeedWrite(port, retlen, buffer)
+    LowspeedRead(port, buflen, buffer)
+    BluetoothStatus(conn, result)
+    BluetoothWrite(conn, buffer)
+ 
+
+
+Version 1.0.1.b15
+-----------------
+- Adds to NXC new API functions:
+    ExitTo(task): Exit the current task immediately and start the specified task
+    Stop(bStop): Stop the program if the boolean expression evaluates to true
+    SetInput(port, field, value): Set an input field to the specified value 
+    SetOutput(ports, field, value): Set an output field to the specified value
+    PowerDown(): Power down the brick immediately
+    RebootInFirmwareMode(): Reboot the brick in firmware mode immediately
+    BatteryLevel(): Read the current battery level (in millivolts)
+    FreeMemory(): Read the free flash memory (in bytes)
+    NumToStr(val): Convert the specified numeric value to a string
+    StrCat(str1, str2, ..., strN): Concatenate the args into a single string
+    SubStr(str, idx, len): Extract the specified portion of a string
+    Flatten(val): Convert value into a string based on the size of scalar datatype
+    StrReplace(str, idx, strnew): Replace characters in 'str' with those in 'strnew'
+    StrToNum(str): Convert string into a number
+    StrLen(str): Return the length of the string argument
+    StrIndex(str, idx): Return the ASCII value of str[idx]
+- Adds to NXC the "until" loop construct and the goto label construct
+- Fixes a NXC parser bug in if (condition) { } else { } construct
+- Adds support for && and || operators in boolean expressions 
+- Adds support for <<, >>, <<=, and >>= operators in numeric expressions
+- Adds to NXC new API macros:
+    SensorType(p)
+    SensorMode(p)
+    SensorRaw(p) 
+    SensorNormalized(p)
+    SensorScaled(p) 
+    SensorInvalid(p)
+    MotorMode(p)
+    MotorPower(p)
+    MotorActualSpeed(p)
+    MotorTachoCount(p)  // this replaced TachometerCount(p)
+    MotorTachoLimit(p)  // this replaced TachometerLimit(p)
+    MotorRunState(p)
+    MotorTurnRatio(p)
+    MotorRegulation(p)
+    MotorOverload(p)
+    MotorRegPValue(p)
+    MotorRegIValue(p)
+    MotorRegDValue(p)
+    MotorBlockTachoCount(p)
+    MotorRotationCount(p)
+- Adds to NBC many new API macros:
+    PointOut(x, y, clear?) 
+    LineOut(x1, y1, x2, y2, clear?)
+    RectOut(x, y, width, height, clear?)
+    CircleOut(x, y, radius, clear?)
+    GraphicOut(x, y, filename, varArray, clear?)
+    PlayToneEx(frequency, duration, volume, loop?)
+    PlayFileEx(filename, volume, loop?)
+    GetSoundState(state, flags)
+    SetSoundState(state, flags, result)
+    SignedRandom(value)
+    GetFirstTick(value)
+    SetIOMapBytes(modName, offset, len, arrIn)
+    SetIOMapValue(modName, offset, n)
+    SetUIModuleValue(offset, n)
+    SetIOCtrlModuleValue(offset, n)
+    SetCommandModuleValue(offset, n)
+    SetSoundModuleValue(offset, n)
+    SetButtonModuleValue(offset, n)
+    SetInputModuleValue(offset, n)
+    SetOutputModuleValue(offset, n)
+    SetLowSpeedModuleValue(offset, n)
+    SetDisplayModuleValue(offset, n)
+    SetCommModuleValue(offset, n)
+    RebootInFirmwareMode
+    PowerDown
+    SetSoundFrequency(n)
+    SetSoundDuration(n)
+    SetSoundSampleRate(n)
+    SetSoundFlags(n)
+    SetSoundState(n)
+    SetSoundMode(n)
+    SetSoundVolume(n)
+    SetButtonPressCount(b, n)
+    SetButtonLongPressCount(b, n)
+    SetButtonShortReleaseCount(b, n)
+    SetButtonLongReleaseCount(b, n)
+    SetButtonReleaseCount(b, n)
+    SetButtonState(b, n)
+    SetCommandFlags(n)
+    SetUIState(n)
+    SetUIButton(n)
+    SetVMRunState(n)
+    SetBatteryState(n)
+    SetBluetoothState(n)
+    SetUsbState(n)
+    SetSleepTimeout(n)
+    SetSleepTimer(n)
+    SetVolume(level)
+    SetOnBrickProgramPointer(idx)
+    ForceOff(n)
+    SetInCustomZeroOffset(p, n)
+    SetInSensorBoolean(p, n)
+    SetInDigiPinsDirection(p, n)
+    SetInDigiPinsStatus(p, n)
+    SetInDigiPinsOutputLevel(p, n)
+    SetInCustomPercentFullScale(p, n)
+    SetInCustomActiveStatus(p, n)
+    SetOutPwnFreq(n)
+    SetLSInputBuffer(p, offset, cnt, data)
+    SetLSInputBufferInPtr(p, n)
+    SetLSInputBufferOutPtr(p, n)
+    setLSInputBufferBytesToRx(p, n)
+    SetLSOutputBuffer(p, offset, cnt, data)
+    SetLSOutputBufferInPtr(p, n)
+    SetLSOutputBufferOutPtr(p, n)
+    SetLSOutputBufferBytesToRx(p, n)
+    SetLSMode(p, v)
+    SetLSChannelState(p, v)
+    SetLSErrorType(p, v)
+    SetLSState(v)
+    SetLSSpeed(v)
+    SetDisplayEraseMask(n)
+    SetDisplayUpdateMask(n)
+    SetDisplayDisplay(n)
+    SetDisplayFlags(n)
+    SetDisplayTextLinesCenterFlags(n)
+    setDisplayNormal(x, line, cnt, data)
+    SetDisplayPopup(x, line, cnt, data)
+    SetBTDeviceName(p, str)
+    SetBTDeviceClass(p, v)
+    SetBTDeviceAddress(p, addr)
+    SetBTDeviceStatus(p, v)
+    SetBTConnectionName(p, str)
+    SetBTConnectionClass(p, v)
+    SetBTConnectionPinCode(p, str)
+    SetBTConnectionAddress(p, addr)
+    SetBTConnectionHandleNum(p, v)
+    SetBTConnectionStreamStatus(p, v)
+    SetBTConnectionLinkQuality(p, v)
+    SetBrickDataName(str)
+    SetBrickDataBluecoreVersion(v)
+    SetBrickDataAddress(addr)
+    SetBrickDataBtStateStatus(v)
+    SetBrickDataBtHardwareStatus(v)
+    SetBrickDataTimeoutValue(v)
+    SetBTInputBuffer(data)
+    SetBTInputBufferInPtr(n)
+    SetBTInputBufferOutPtr(n)
+    SetBTOutputBuffer(data)
+    SetBTOutputBufferInPtr(n)
+    SetBTOutputBufferOutPtr(n)
+    SetHSInputBuffer(data)
+    SetHSInputBufferInPtr(n)
+    SetHSInputBufferOutPtr(n)
+    SetHSOutputBuffer(data)
+    SetHSOutputBufferInPtr(n)
+    SetHSOutputBufferOutPtr(n)
+    SetUSBInputBuffer(data)
+    SetUSBInputBufferInPtr(n)
+    SetUSBInputBufferOutPtr(n)
+    SetUSBOutputBuffer(data)
+    SetUSBOutputBufferInPtr(n)
+    SetUSBOutputBufferOutPtr(n)
+    SetUSBPollBuffer(data)
+    SetUSBPollBufferInPtr(n)
+    SetUSBPollBufferOutPtr(n)
+    SetBTDeviceCount(n)
+    SetBTDeviceNameCount(n)
+    SetHSFlags(n)
+    SetHSSpeed(n)
+    SetHSState(n)
+    SetUSBState(n)
+    GetIOMapBytes(modName, offset, len, arrOut)
+    GetIOMapValue(modName, offset, n)
+    GetUIModuleValue(offset, n)
+    GetLoaderModuleValue(offset, n)
+    GetCommandModuleValue(offset, n)
+    GetSoundModuleValue(offset, n)
+    GetButtonModuleValue(offset, n)
+    GetInputModuleValue(offset, n)
+    GetOutputModuleValue(offset, n)
+    GetLowSpeedModuleValue(offset, n)
+    GetDisplayModuleValue(offset, n)
+    GetCommModuleValue(offset, n)
+    GetFreeMemory(value)
+    GetSoundFrequency(value)
+    GetSoundDuration(value)
+    GetSoundSampleRate(value)
+    GetSoundFlags(value)
+    GetSoundState(value)
+    GetSoundMode(value)
+    GetSoundVolume(value)
+    GetButtonPressCount(b, value)
+    GetButtonLongPressCount(b, value)
+    GetButtonShortReleaseCount(b, value)
+    GetButtonLongReleaseCount(b, value)
+    GetButtonReleaseCount(b, value)
+    GetButtonState(b, value)
+    GetBatteryLevel(value) 
+    GetCommandFlags(value)
+    GetUIState(value)
+    GetUIButton(value)
+    GetVMRunState(value)
+    GetBatteryState(value)
+    GetBluetoothState(value)
+    GetUsbState(value)
+    GetSleepTimeout(value)
+    GetSleepTimer(value)
+    GetRechargeableBattery(value)
+    GetVolume(value)
+    GetOnBrickProgramPointer(value)
+    GetInCustomZeroOffset(p, v)
+    GetInSensorBoolean(p, v)
+    GetInDigiPinsDirection(p, v)
+    GetInDigiPinsStatus(p, v)
+    GetInDigiPinsOutputLevel(p, v)
+    GetInCustomPercentFullScale(p, v)
+    GetInCustomActiveStatus(p, v)
+    GetOutPwnFreq(v)
+    GetLSInputBuffer(p, offset, cnt, data)
+    GetLSInputBufferInPtr(p, n)
+    GetLSInputBufferOutPtr(p, n)
+    GetLSInputBufferBytesToRx(p, n)
+    GetLSOutputBuffer(p, offset, cnt, data)
+    GetLSOutputBufferInPtr(p, n)
+    GetLSOutputBufferOutPtr(p, n)
+    GetLSOutputBufferBytesToRx(p, n)
+    GetLSMode(p, v)
+    GetLSChannelState(p, v)
+    GetLSErrorType(p, v)
+    GetLSState(v)
+    GetLSSpeed(v)
+    GetDisplayEraseMask(n)
+    GetDisplayUpdateMask(n)
+    GetDisplayDisplay(n)
+    GetDisplayFlags(n)
+    GetDisplayTextLinesCenterFlags(n)
+    GetDisplayNormal(x, line, cnt, data)
+    GetDisplayPopup(x, line, cnt, data)
+    GetBTDeviceName(p, str)
+    GetBTDeviceClass(p, v)
+    GetBTDeviceAddress(p, addr)
+    GetBTDeviceStatus(p, v)
+    GetBTConnectionName(p, str)
+    GetBTConnectionClass(p, v)
+    GetBTConnectionPinCode(p, str)
+    GetBTConnectionAddress(p, addr)
+    GetBTConnectionHandleNum(p, v)
+    GetBTConnectionStreamStatus(p, v)
+    GetBTConnectionLinkQuality(p, v)
+    GetBrickDataName(str)
+    GetBrickDataBluecoreVersion(v)
+    GetBrickDataAddress(addr)
+    GetBrickDataBtStateStatus(v)
+    GetBrickDataBtHardwareStatus(v)
+    GetBrickDataTimeoutValue(v)
+    GetBTInputBuffer(data)
+    GetBTInputBufferInPtr(n)
+    GetBTInputBufferOutPtr(n)
+    GetBTOutputBuffer(data)
+    GetBTOutputBufferInPtr(n)
+    GetBTOutputBufferOutPtr(n)
+    GetHSInputBuffer(data)
+    GetHSInputBufferInPtr(n)
+    GetHSInputBufferOutPtr(n)
+    GetHSOutputBuffer(data)
+    GetHSOutputBufferInPtr(n)
+    GetHSOutputBufferOutPtr(n)
+    GetUSBInputBuffer(data)
+    GetUSBInputBufferInPtr(n)
+    GetUSBInputBufferOutPtr(n)
+    GetUSBOutputBuffer(data)
+    GetUSBOutputBufferInPtr(n)
+    GetUSBOutputBufferOutPtr(n)
+    GetUSBPollBuffer(data)
+    GetUSBPollBufferInPtr(n)
+    GetUSBPollBufferOutPtr(n)
+    GetBTDeviceCount(n)
+    GetBTDeviceNameCount(n)
+    GetHSFlags(n)
+    GetHSSpeed(n)
+    GetHSState(n)
+    GetUSBState(n)
+    CreateFile(fname, fsize, handle, result)
+    OpenFileAppend(fname, fsize, handle, result)
+    OpenFileRead(fname, fsize, handle, result)
+    CloseFile(handle, result)
+    ResolveHandle(fname, handle, writeable, result)
+    RenameFile(oldname, newname, result)
+    DeleteFile(fname, result)
+    SendMessage(queue, msg, result)
+    ReceiveMessage(queue, clear, msg, result)
+    LowspeedStatus(port, bready, result)
+    LowspeedWrite(port, retlen, buffer, result)
+    LowspeedRead(port, buflen, buffer, result)
+    BluetoothStatus(conn, result)
+    BluetoothWrite(conn, buffer, result)
+- Adds to NBC new opcodes:
+    strindex dest, strsrc, idx: same as index but can take a constant string
+    strreplace strDest, strSrc, idx, strNew: same as replace but can take constant strings 
+    strlen dest, strSource: store the length of the input string into dest
+    shr result, value, n: shift right value by 'n' bits and store in result
+    shl result, value, n: shift left value by 'n' bits and store in result
+- Adds to NBC a special compile-time operator:
+    sizeof(variable): returns the element size of the specified variable
+- Adds to NBC a special compile-time opcode:
+    compchk comparecode, const1, const2: returns a compiler error if the specified 
+      expression is not true.  For example: compchk EQ, sizeof(arg3), 1
+- Adds '~' operator to the NBC compile-time expression evaluator (bitwise not) 
+- Fixes a problem in NBC (and NXC) with the RotateMotor API function
+- Fixes a bug in NBC with nested preprocessor macro function calls 
+    (e.g., FooBar(MyMacro(x, y), 2, 4)
+- Fixes a bug in NBC with trailing spaces on #define values
+
+
+
+Version 1.0.1.b14
+-----------------
+- Adds string variables with initialization, assignment, concatenation (including +=).
+- Moves ReadSensor, ReadSensorUS, TextOut, NumOut, PlatTone, PlayFile, and ResetSleepTimer
+  to function status (can be on the RHS of an assignment).
+- Cls is renamed as ResetScreen.  Write is removed (use TextOut and NumOut instead).
+- PlayTone is replaced with PlayToneEx(freq, dur, vol, loop).  
+- PlayFile is replaced with PlayFileEx(fname, vol, loop).
+- Renames InputFieldValue as GetInput and OutputFieldValue as GetOutput.
+- Reorganizes includes so that NXCDefs.h includes NBCCommon.h and NXTDefs.h includes
+  NBCCommon.h.  NXCDefs.h now defines PlayTone and PlayFile API macros.  It also
+  defines TachometerCount(port) and TachometerLimit(port) API macros (more to come).
+- Adds SoundState, SoundFlags, StopSound, ButtonPressed, ButtonCount, ReadButtonEx,
+  GetFirstTick, PointOut, LineOut, CircleOut, RectOut, and GraphicOut functions.
+- Fixes multi-threading issues with variables used as stack and register variables.
+
+
+Version 1.0.1.b13
+-----------------
+
+This beta release improves support for the Not eXactly C (NXC) programming language.
+NXC now supports do-while and repeat loops as found in NQC.  These constructs are
+in addition to the already supported if/else, while, and for loops.  This release
+also enables using either single statement or block statements with all the 
+programming constructs (the previous beta required block statements).  There is
+also support for an "asm" block which outputs NBC code directly to the backend.
+
+This release also expands the set of API functions to include TextOut, NumOut, 
+OnFwdReg, OnRevReg, OnFwdSync, OnRevSync, RotateMotor, RotateMotorEx, 
+SetSensorType, SetSensorMode, ReadSensor, ReadSensorUS, ClearSensor, 
+SetSensorTouch, SetSensorLight, SetSensorSound, SetSensorUltrasonic, ResetSensor, 
+PlayTone, PlayFile, Acquire, Release, Precedes, Follows, ResetSleepTimer,
+abs, sign, Random, InputFieldValue, OutputFieldValue, IOMA, and GetTick.  The
+last seven of these return a value and can be used on the RHS of assignment
+statements.  The InputFieldValue and OutputFieldValue functions can be used
+in simple preprocessor macros (which will be formalized in a future beta NXC
+API header) for accessing any input or output value (such as TachoCount, 
+SensorValue, SensorValueRaw, ActualSpeed, etc...)
+
+Variables may be initialized at the declaration point.  Declarations may exist 
+anywhere in the source outside of tasks and subroutines.  Previously all 
+declarations had to be prior to the first task or subroutine.  Future releases
+will enable local variable declarations but they are not currently supported.
+
+
+Version 1.0.1.b12
+-----------------
+
+This beta release introduces support for two new languages related to NBC.  The NPG 
+language is a very simple 5 step declarative language for writing RPG (NXT Program)
+executables.  NPG programs simple list the 5 steps with compiler support for C++-style
+comments interspersed.  Unlike the built-in NXT menu system mechanism for writing
+NXT Programs which require alternating move and wait commands, programs written using
+NPG can sequence the 5 commands in any order except that the EndStop and EndLoop 
+commands can only occur as the last step.  See test.npg for a small sample.  
+These programs require the RPGReader.sys program on the NXT.  This executable is 
+14kb in size but a replacement version which nearly identical functionality will 
+soon be available on the NBC site which is only ~2.5kb.
+
+NBC also now supports a very early version of the NXC programming language.  This 
+language is a lot like NQC syntax-wise.  It is still in its infancy so it is subject 
+to substantial change and improvement.  The NBC compiler converts the NXC code to 
+NBC code and then compiles it as it would any other NBC program.  See test.nxc for 
+a basic example.
+
+The NXTDefs.h header file has been split into NXCDefs.h and NXTDefs.h.  NBC programs 
+should still #include "NXTDefs.h" but NXC programs should #include "NXCDefs.h".
+
+This release also fixes a problem with unix-style line endings which made it so that
+multiline macros written on non-Windows platforms would not work correctly.
+
+
+
+Version 1.0.1.b11
+-----------------
+
+This beta release has a number of additional macros in NXTDefs.h for simplifying several
+aspects of programming the NXT.
+
+
+
+Version 1.0.1.b10
+----------------
+
+This beta release implements multi-dimensional array support.  
+
+It has additional macros in NXTDefs.h for motor and sensor control.  
+
+It moves all forms of optimization under the control of a command-line switch 
+(-Z, -Z1, or -Z2).  The optimizations that were always executed in beta 8 are now 
+only executed if you set the optimization level to at least level 1.  -Z and -Z2 
+both set the optimization level to 2.  Level 2 optimizations replace several 
+different patterns of code with simplified equivalents.
+
+NBC now has special tokens that can be used in macros or elsewhere for useful purposes.
+The tokens are __FILE__, __LINE__, __VER__, __THREADNAME__, __I__, __J__, __ResetI__, 
+__ResetJ__, __IncI__, __IncJ__, __DecI__, and __DecJ__.  The compiler will also replace 
+## wherever it exists in the sourcecode with nothing (even within strings).  These tokens
+make it possible to define preprocessor macros which can be used repeatedly in the same
+thread or in multiple concurrent threads without causing threading problems or 
+producing duplicate label names.  The values of __I__ and __J__ are automatically reset
+to zero at the start of each new thread or subroutine.
+
+
+
+Version 1.0.1.b8
+----------------
+
+This beta release adds call, release, abs, sub, and waitv opcodes.  It also makes
+the preprocessor operate recursively on both parameterized and non-parameterized 
+macros.  It fixes a typo in the NXTDefs.h header file and adds some standard 
+preprocessor macros for motor control.  The compiler has a major new optimization
+feature which removes unused variables and threads/subroutines from the compiled
+executable.  In b7 I accidentally broke the "wait" opcode support that was added in
+b6 but that support has been restored in b8.
+
+
+Version 1.0.1.b7
+----------------
+
+This beta release includes a new symbol table generation feature (-Y) along with
+a significantly faster preprocessor.  A bug in processing parameterized macros which
+had whitespace following the last parameter was also fixed.
+
+
+Version 1.0.1.b6
+----------------
+
+Fixed a bug in the binary file download code in the Win32 version.  Added
+support for generating thread-specific wait subroutines when the compiler
+sees a thread try to use the wait opcode (since that opcode was not included
+in the standard NXT firmware).
+
+Next Byte Codes Compiler version 1.0.1.b6 (1.0.1.6, built Aug 18 2006 17:13:22)
+     Copyright (c) 2006, John Hansen
+
+
+Version 1.0.1.b5
+----------------
+
+Added support for parameterized macro functions.  Added support for multi-line
+macros.  Fixed some preprocessor bugs related to unmatched #ifdef #endif pairs
+and #include statements with unsupported format (must be #include "filename.extension").
+Updated NXTDefs.h with additional IOMap constants.  Released the Free Pascal-compliant
+sourcecode as part of the new BricxCC 3.3.7.15 source code release.
+
+Next Byte Codes Compiler version 1.0.1.b5 (1.0.1.5, built Aug 16 2006 17:08:56)
+     Copyright (c) 2006, John Hansen
+
+
+
+version 0.1.4.b4
+----------------
+
+Added a built-in preprocessor.  Fixed argument checking for the 3 opcodes which
+take a variable number of arguments.  Added a Mac OSX version of the compiler.
+
+Next Byte Codes Compiler version 0.1.4.b4 (0.1.4.1, built Jun 15 2006 13:38:46)
+     Copyright (c) 2006, John Hansen
+
+
+version 0.1.3.b3
+----------------
+
+Fixed assumptions regarding bluetooth communication and port name aliases.  To use
+Bluetooth you must add the -BT switch to the command line.
+
+Next Byte Codes Compiler version 0.1.3.b3 (0.1.3.18, built Jun 06 2006 08:40:14)
+     Copyright (c) 2006, John Hansen
+Syntax: nbc [options] filename [options]
+
+   -T=<target>: target must be NXT
+   -S=<portname>: specify port name (COMn or usb), resource name, or alias
+   -BT: use bluetooth
+   -d: download program
+   -b: treat input file as a binary file (don't compile it)
+   -q: no sound upon download completion
+   -x: decompile program
+   -O=<outfile> : specify output file
+   -E=<filename> : write compiler errors to <filename>
+   -I=<path>: search <path> for include files
+   -L=<filename> : generate code listing to <filename>
+   -help : display command line options
+
+version 0.1.3.b2
+----------------
+
+Added support for initializing arrays of structs.
+Fixed a few minor bugs.
+Downloading programs now depends on the LEGO Mindstorms NXT Driver (Fantom).
+
+Next Byte Codes Compiler version 0.1.3.b2 (0.1.3.17, built May 17 2006 16:53:18)
+     Copyright (c) 2006, John Hansen
+
+
+version 0.1.3.b1
+----------------
+
+First official beta of NBC.
+
+
+NXT Bytecode Compiler version 0.1.3.b1 (0.1.3.14, built May 02 2006 13:14:50)
+     Copyright 2006, John Hansen
+Syntax: nbc [options] filename [options]
+
+   -T=<target>: target must be NXT
+   -S=<portname>: specify port (COMn or usb)
+   -d: download program
+   -b: treat input file as a binary file (don't compile it)
+   -x: decompile program
+   -q: no sound upon download completion
+   -O=<outfile> : specify output file
+   -E=<filename> : write compiler errors to <filename>
+   -I=<path>: search <path> for include files
+   -L=<filename> : generate code listing to <filename>
+   -help : display command line options
+

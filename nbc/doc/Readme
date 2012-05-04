@@ -1,0 +1,506 @@
+                              Not eXactly C
+                              -------------
+
+Not eXactly C (NXC) is a high level programming language similar to NQC.
+It targets the new LEGO NXT product.  Like NQC, it is available for Windows, 
+Mac OS X, and Linux platforms.  While NXC is not yet complete, it is very 
+functional, with a large API for the NXT.
+
+The NXC language currently supports the following programming constructs:
+
+if/else, while, do-while, repeat, for, switch, until, goto, and asm {}
+
+break and continue are both supported within looping constructs.  return may be
+used to exit a subroutine at any point, optionally returning a value to the
+calling routine.
+
+The NXC language supports global variables, local variables, tasks with no 
+parameters, and functions with parameters and return values.  Currently supported 
+variable types are:
+
+int, short, long, byte, char, bool, unsigned short, unsigned long, unsigned int, float,
+mutex, string, and arrays of all these types except mutex. (int == short).
+
+Global variables may be initialized at the point of declaration using constants 
+or constant expressions.  Local variables may also be initialized at their 
+declaration using any type of expression (not limited to constants).  
+
+Arrays of any dimension may be declared by adding one or more pairs of square
+brackets after the variable name (int X[];).  Global arrays of one dimension may
+be initialized at the point of declaration using the following syntax:
+
+  int X[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}; // 10 elements
+
+Multi-dimensional arrays and local arrays must be initialized using the ArrayInit
+API function.
+
+Support for struct declarations and variables of type struct is included
+as of beta 28.  Support for typdefs is also included as of beta 28.
+
+NXC supports the following standard C (and NQC) operators:
+
++, -, *, /, %,  & (bitwise and), | (bitwise or), ^ (bitwise xor), ! (logical
+not), ++ (pre and post increment), -- (pre and post decrement), <, <=, >, >=, ==, !=, =, *=, /=,
+%=, +=, -=, &=, |=, ^=, &&, ||, <<, >>, <<=, >>=, ||=, and +-=.
+
+The ?: operator is also supported.
+
+Here's the current list of API functions:
+
+Acquire(mutex);
+Release(mutex);
+Precedes(task1, task2, ..., taskn);
+Follows(task1, task2, ..., taskn);
+
+val = ButtonCount(btn, reset);
+val = ButtonPressed(btn, reset);
+ReadButtonEx(btn, reset, pressed, count);
+
+ClearSensor(port);
+ResetSensor(port);
+val = Sensor(port);
+val = SensorUS(port);
+SetSensorLight(port);
+SetSensorSound(port);
+SetSensorTouch(port);
+SetSensorLowspeed(port);
+SetSensorType(port, type);
+SetSensorMode(port, mode);
+SetInput(port, field, value);
+val = GetInput(port, field);
+val = SensorType(p);
+val = SensorMode(p);
+val = SensorRaw(p);
+val = SensorNormalized(p);
+val = SensorScaled(p);
+val = SensorInvalid(p);
+
+
+val = FirstTick();
+val = CurrentTick();
+Wait(ms);
+ResetSleepTimer();
+
+val = IOMA(num);
+SetIOMA(num);
+val = FreeMemory();
+val = BatteryLevel();
+PowerDown();
+RebootInFirmwareMode();
+
+ClearScreen();
+NumOut(x, y, number, cls=false);
+TextOut(x, y, string, cls=false);
+GraphicOut(x, y, filename, cls=false);
+GraphicOutEx(x, y, filename, vars, cls=false);
+CircleOut(x, y, radius, cls=false);
+LineOut(x1, y1, x2, y2, cls=false);
+PointOut(x, y, cls=false);
+RectOut(x, y, width, height, cls=false);
+ResetScreen();
+
+Coast(ports);
+Float(ports);
+Off(ports);
+OnFwd(ports, power);
+OnRev(ports, power);
+OnFwdReg(ports, power, regmode);
+OnRevReg(ports, power, regmode);
+OnFwdSync(ports, power, turnpct);
+OnRevSync(ports, power, turnpct);
+CoastEx(ports, reset);
+OffEx(ports, reset);
+OnFwdEx(ports, power, reset);
+OnRevEx(ports, power, reset);
+OnFwdRegEx(ports, power, regmode, reset);
+OnRevRegEx(ports, power, regmode, reset);
+OnFwdSyncEx(ports, power, turnpct, reset);
+OnRevSyncEx(ports, power, turnpct, reset);
+RotateMotor(ports, power, angle);
+RotateMotorEx(ports, power, angle, turnpct, sync, stop);
+RotateMotorPID(ports, power, angle, p, i, d);
+RotateMotorExPID(ports, power, angle, turnpct, sync, stop, p, i, d);
+
+SetOutput(ports, field1, value1, ..., fieldN, valueN);
+
+val = GetOutput(port, field);
+val = MotorMode(p);
+val = MotorPower(p);
+val = MotorActualSpeed(p);
+val = MotorTachoCount(p);
+val = MotorTachoLimit(p);
+val = MotorRunState(p);
+val = MotorTurnRatio(p);
+val = MotorRegulation(p);
+val = MotorOverload(p);
+val = MotorRegPValue(p);
+val = MotorRegIValue(p);
+val = MotorRegDValue(p);
+val = MotorBlockTachoCount(p);
+val = MotorRotationCount(p);
+
+ResetTachoCount(ports);
+ResetBlockTachoCount(ports);
+ResetRotationCount(ports);
+ResetAllTachoCounts(ports);
+
+PlayFile(filename);
+PlayFileEx(filename, volume, loop);
+PlayTone(frequency, duration);
+PlayToneEx(frequency, duration, volume, loop);
+val = SoundFlags();
+val = SoundState();
+StopSound();
+
+val = Random(); // signed word value
+val = Random(max); // unsigned word value
+
+start taskname;
+ExitTo(taskname);
+Stop(bvalue);
+
+val = abs(n);
+val = sign(n);
+
+val = StrToNum(str);
+val = StrLen(str);
+val = StrIndex(str, idx);
+
+str = NumToStr(num);
+str = StrCat(str1, str2, ..., strN);
+str = SubStr(string, idx, len);
+str = StrReplace(string, idx, strnew);
+str = Flatten(num);
+str = ByteArrayToStr(a);
+
+ByteArrayToStrEx(a, s);
+StrToByteArray(s, a);
+num = ArrayLen(a);
+ArrayInit(a, val, cnt);
+ArraySubset(aout, asrc, idx, len);
+ArrayBuild(aout, src1, ..., srcN);
+
+GetLSInputBuffer(p, offset, cnt, data);
+GetLSOutputBuffer(p, offset, cnt, data);
+GetDisplayNormal(x, line, cnt, data);
+GetDisplayPopup(x, line, cnt, data);
+GetBTInputBuffer(offset, cnt, data);
+GetBTOutputBuffer(offset, cnt, data);
+GetHSInputBuffer(offset, cnt, data);
+GetHSOutputBuffer(offset, cnt, data);
+GetUSBInputBuffer(offset, cnt, data);
+GetUSBOutputBuffer(offset, cnt, data);
+GetUSBPollBuffer(offset, cnt, data);
+
+str = BTDeviceName(p);
+str = BTConnectionName(p);
+str = BTConnectionPinCode(p);
+str = BrickDataName();
+
+GetBTDeviceAddress(p, data);
+GetBTConnectionAddress(p, data);
+GetBrickDataAddress(data);
+
+val = SoundFrequency();
+val = SoundDuration();
+val = SoundSampleRate();
+val = SoundMode();
+val = SoundVolume();
+
+val = ButtonPressCount(b);
+val = ButtonLongPressCount(b);
+val = ButtonShortReleaseCount(b);
+val = ButtonLongReleaseCount(b);
+val = ButtonReleaseCount(b);
+val = ButtonState(b);
+
+val = CommandFlags();
+val = UIState();
+val = UIButton();
+val = VMRunState();
+val = BatteryState();
+val = BluetoothState();
+val = UsbState();
+val = SleepTimeout();
+val = SleepTimer();
+val = RechargeableBattery();
+val = Volume();
+val = OnBrickProgramPointer();
+
+val = CustomSensorZeroOffset(p);
+val = CustomSensorPercentFullScale(p);
+val = CustomSensorActiveStatus(p);
+val = SensorBoolean(p);
+val = SensorDigiPinsDirection(p);
+val = SensorDigiPinsStatus(p);
+val = SensorDigiPinsOutputLevel(p);
+
+val = MotorPwnFreq();
+
+val = LSInputBufferInPtr(p);
+val = LSInputBufferOutPtr(p);
+val = LSInputBufferBytesToRx(p);
+val = LSOutputBufferInPtr(p);
+val = LSOutputBufferOutPtr(p);
+val = LSOutputBufferBytesToRx(p);
+val = LSMode(p);
+val = LSChannelState(p);
+val = LSErrorType(p);
+val = LSState();
+val = LSSpeed();
+
+val = DisplayEraseMask();
+val = DisplayUpdateMask();
+val = DisplayDisplay();
+val = DisplayFlags();
+val = DisplayTextLinesCenterFlags();
+
+val = BTDeviceClass(p);
+val = BTDeviceStatus(p);
+val = BTConnectionClass(p);
+val = BTConnectionHandleNum(p);
+val = BTConnectionStreamStatus(p);
+val = BTConnectionLinkQuality(p);
+val = BrickDataBluecoreVersion();
+val = BrickDataBtStateStatus();
+val = BrickDataBtHardwareStatus();
+val = BrickDataTimeoutValue();
+val = BTInputBufferInPtr();
+val = BTInputBufferOutPtr();
+val = BTOutputBufferInPtr();
+val = BTOutputBufferOutPtr();
+val = HSInputBufferInPtr();
+val = HSInputBufferOutPtr();
+val = HSOutputBufferInPtr();
+val = HSOutputBufferOutPtr();
+val = USBInputBufferInPtr();
+val = USBInputBufferOutPtr();
+val = USBOutputBufferInPtr();
+val = USBOutputBufferOutPtr();
+val = USBPollBufferInPtr();
+val = USBPollBufferOutPtr();
+val = BTDeviceCount();
+val = BTDeviceNameCount();
+val = HSFlags();
+val = HSSpeed();
+val = HSState();
+val = USBState();
+
+SetSoundFrequency(n);
+SetSoundDuration(n);
+SetSoundSampleRate(n);
+SetSoundFlags(n);
+SetSoundState(n);
+SetSoundMode(n);
+SetSoundVolume(n);
+
+SetCommandFlags(n);
+SetUIState(n);
+SetUIButton(n);
+SetVMRunState(n);
+SetBatteryState(n);
+SetBluetoothState(n);
+SetUsbState(n);
+SetSleepTimeout(n);
+SetSleepTimer(n);
+SetVolume(n);
+SetOnBrickProgramPointer(n);
+ForceOff(n);
+
+SetCustomSensorZeroOffset(p, n);
+SetCustomSensorPercentFullScale(p, n);
+SetCustomSensorActiveStatus(p, n);
+SetSensorBoolean(p, n);
+SetSensorDigiPinsDirection(p, n);
+SetSensorDigiPinsStatus(p, n);
+SetSensorDigiPinsOutputLevel(p, n);
+
+SetMotorPwnFreq(n);
+
+SetLSInputBuffer(p, offset, cnt, data);
+SetLSInputBufferInPtr(p, n);
+SetLSInputBufferOutPtr(p, n);
+SetLSInputBufferBytesToRx(p, n);
+SetLSOutputBuffer(p, offset, cnt, data);
+SetLSOutputBufferInPtr(p, n);
+SetLSOutputBufferOutPtr(p, n);
+SetLSOutputBufferBytesToRx(p, n);
+SetLSMode(p, n);
+SetLSChannelState(p, n);
+SetLSErrorType(p, n);
+SetLSState(n);
+SetLSSpeed(n);
+
+SetDisplayEraseMask(n);
+SetDisplayUpdateMask(n);
+SetDisplayDisplay(n);
+SetDisplayFlags(n);
+SetDisplayTextLinesCenterFlags(n);
+SetDisplayNormal(x, line, cnt, data);
+SetDisplayPopup(x, line, cnt, data);
+
+SetBTDeviceName(p, str);
+SetBTDeviceAddress(p, addr);
+SetBTConnectionName(p, str);
+SetBTConnectionPinCode(p, code);
+SetBTConnectionAddress(p, addr);
+SetBrickDataName(str);
+SetBrickDataAddress(p, addr);
+SetBTDeviceClass(p, n);
+SetBTDeviceStatus(p, n);
+SetBTConnectionClass(p, n);
+SetBTConnectionHandleNum(p, n);
+SetBTConnectionStreamStatus(p, n);
+SetBTConnectionLinkQuality(p, n);
+SetBrickDataBluecoreVersion(n);
+SetBrickDataBtStateStatus(n);
+SetBrickDataBtHardwareStatus(n);
+SetBrickDataTimeoutValue(n);
+SetBTInputBuffer(offset, cnt, data);
+SetBTInputBufferInPtr(n);
+SetBTInputBufferOutPtr(n);
+SetBTOutputBuffer(offset, cnt, data);
+SetBTOutputBufferInPtr(n);
+SetBTOutputBufferOutPtr(n);
+SetHSInputBuffer(offset, cnt, data);
+SetHSInputBufferInPtr(n);
+SetHSInputBufferOutPtr(n);
+SetHSOutputBuffer(offset, cnt, data);
+SetHSOutputBufferInPtr(n);
+SetHSOutputBufferOutPtr(n);
+SetUSBInputBuffer(offset, cnt, data);
+SetUSBInputBufferInPtr(n);
+SetUSBInputBufferOutPtr(n);
+SetUSBOutputBuffer(offset, cnt, data);
+SetUSBOutputBufferInPtr(n);
+SetUSBOutputBufferOutPtr(n);
+SetUSBPollBuffer(offset, cnt, data);
+SetUSBPollBufferInPtr(n);
+SetUSBPollBufferOutPtr(n);
+SetBTDeviceCount(n);
+SetBTDeviceNameCount(n);
+SetHSFlags(n);
+SetHSSpeed(n);
+SetHSState(n);
+SetUSBState(n);
+
+val = CreateFile(fname, fsize, handle);
+val = OpenFileAppend(fname, fsize, handle);
+val = OpenFileRead(fname, fsize, handle);
+val = CloseFile(handle);
+val = ResolveHandle(fname, handle, writeable);
+val = RenameFile(oldname, newname);
+val = DeleteFile(fname);
+val = Read(handle, n);
+val = ReadLn(handle, n);
+val = ReadBytes(handle, len, buf);
+val = Write(handle, n);
+val = WriteLn(handle, n);
+val = WriteString(handle, str, cnt);
+val = WriteLnString(handle, str, cnt);
+val = WriteBytes(handle, buf, cnt);
+val = WriteBytesEx(handle, len, buf);
+
+val = SendMessage(queue, msg);
+val = ReceiveMessage(queue, clear, msg);
+
+val = LowspeedStatus(port, bready);
+val = LowspeedBytesReady(port);
+val = LowspeedCheckStatus(port);
+val = LowspeedWrite(port, retlen, buffer);
+val = LowspeedRead(port, buflen, buffer);
+
+val = I2CStatus(port, bready);
+val = I2CBytesReady(port);
+val = I2CCheckStatus(port);
+val = I2CWrite(port, retlen, buffer);
+val = I2CRead(port, buflen, buffer);
+val = I2CBytes(port, inbuf, count, outbuf)
+
+val = BluetoothStatus(conn);
+val = BluetoothWrite(conn, buffer);
+
+result = ReceiveRemoteBool(queue, clear, bval);
+result = ReceiveRemoteNumber(queue, clear, val);
+result = ReceiveRemoteString(queue, clear, str);
+result = ReceiveRemoteMessageEx(queue, clear, str, val, bval);
+result = SendRemoteBool(conn, queue, bval);
+result = SendRemoteNumber(conn, queue, val);
+result = SendRemoteString(conn, queue, str);
+result = SendResponseBool(queue, bval);
+result = SendResponseNumber(queue, val);
+result = SendResponseString(queue, str);
+
+result = RemoteMessageRead(conn, queue);
+result = RemoteMessageWrite(conn, queue, msg); // alias for SendRemoteString
+result = RemoteStartProgram(conn, filename);
+result = RemoteStopProgram(conn);
+result = RemotePlaySoundFile(conn, filename, bloop);
+result = RemotePlayTone(conn, frequency, duration);
+result = RemoteStopSound(conn);
+result = RemoteKeepAlive(conn);
+result = RemoteResetScaledValue(conn, port);
+result = RemoteResetMotorPosition(conn, port, brelative);
+result = RemoteSetInputMode(conn, port, type, mode);
+result = RemoteSetOutputState(conn, port, speed, mode, regmode, turnpct, runstate, tacholimit);
+
+result = Sqrt(X);
+result = Sin(X);
+result = Cos(X);
+result = Asin(X);
+result = Acos(X);
+
+SysCall(func, args);
+
+SysFileOpenRead(FileOpenType & args);
+SysFileOpenWrite(FileOpenType & args);
+SysFileOpenAppend(FileOpenType & args);
+SysFileRead(FileReadWriteType & args);
+SysFileWrite(FileReadWriteType & args);
+SysFileClose(FileCloseType & args);
+SysFileResolveHandle(FileResolveHandleType & args);
+SysFileRename(FileRenameType & args);
+SysFileDelete(FileDeleteType & args);
+
+SysSoundPlayFile(SoundPlayFileType & args);
+SysSoundPlayTone(SoundPlayToneType & args);
+SysSoundGetState(SoundGetStateType & args);
+SysSoundSetState(SoundSetStateType & args);
+
+SysDrawText(DrawTextType & args);
+SysDrawPoint(DrawPointType & args);
+SysDrawLine(DrawLineType & args);
+SysDrawCircle(DrawCircleType & args);
+SysDrawRect(DrawRectType & args);
+SysDrawGraphic(DrawGraphicType & args);
+SysSetScreenMode(SetScreenModeType & args);
+
+SysReadButton(ReadButtonType & args);
+
+SysCommLSWrite(CommLSWriteType & args);
+SysCommLSRead(CommLSReadType & args);
+SysCommLSCheckStatus(CommLSCheckStatusType & args);
+
+SysRandomNumber(RandomNumberType & args);
+
+SysGetStartTick(GetStartTickType & args);
+
+SysMessageWrite(MessageWriteType & args);
+SysMessageRead(MessageReadType & args);
+
+SysCommBTWrite(CommBTWriteType & args);
+SysCommBTCheckStatus(CommBTCheckStatusType & args);
+
+SysKeepAlive(KeepAliveType & args);
+
+SysIOMapRead(IOMapReadType & args);
+SysIOMapWrite(IOMapWriteType & args);
+
+SysIOMapReadByID(IOMapReadByIDType & args);
+SysIOMapWriteByID(IOMapWriteByIDType & args);
+
+SysDisplayExecuteFunction(DisplayExecuteFunctionType & args);
+SysCommExecuteFunction(CommExecuteFunctionType & args);
+SysLoaderExecuteFunction(LoaderExecuteFunctionType & args);
+
+You can find NXC at http://bricxcc.sourceforge.net/nxc/.
