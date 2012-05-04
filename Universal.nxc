@@ -48,35 +48,53 @@ inline void write0() {
 }
 
 inline int getLineCount(string fileName) {
-	byte fid = fopen(fileName, "r");
-	int lineCount = 0;
-	while (true) {
-		string line;
-		fgets(line, 20, fid);
-		lineCount++;
-		unsigned int strLen = StrLen(line);
-		if (line[strLen] != '\n') 
-			break;
+	byte fid;
+	int fileSize;
+	if (OpenFileRead(fileName, fileSize, fid) == LDR_SUCCESS) {
+		int lineCount = 0;
+		while (true) {
+			string line;
+			if (ReadLnString(fid, line) == LDR_SUCCESS) {
+				lineCount++;
+			}
+			else {
+				break;
+			}
+		}
+		CloseFile(fid);
+		return lineCount;
 	}
-	fclose(fid);
-	return lineCount;
+	else {
+		return 0;
+	}
 }
 
-inline void getLines(string fileName, string &lines[]) {
+
+inline void readLines(string fileName, string &lines[]) {
 	int lineCount = getLineCount(fileName);
-	byte fid = fopen(fileName, "r");
+	TextOut(1, LCD_LINE4, StrCat("lines:  ", NumToStr(lineCount)));
 	ArrayInit(lines, "", lineCount);
-	for (int i=0; i < lineCount; i++) {
-		string line;
-		fgets(line, 20, fid);
-		lines[i] = line;
+
+	if (lineCount > 0) {
+		byte fid;
+		int fileSize;
+		if (OpenFileRead(fileName, fileSize, fid) == LDR_SUCCESS) {
+			for (unsigned int i=0; i < lineCount; i++) {
+				string line;
+				ReadLnString(fid, line);
+				lines[i] = line;
+				TextOut(1, LCD_LINE5, StrCat("read:  ", lines[i]));
+				Wait(100);
+			}
+			CloseFile(fid);
+		}
 	}
-	fclose(fid);
 }
 
 task main() {
 	string instructions[];
-	getLines("bitflip.tur", instructions);
+	string fileName = "bitflipper.txt";
+	readLines(fileName, instructions);
 	unsigned int IP = 0;
 	unsigned int programSize = ArrayLen(instructions);
 	while (IP < programSize) {
@@ -126,5 +144,5 @@ task main() {
 		}
 	}
 	TextOut(1, LCD_LINE1, "End reached");
-
+	Wait(4000);	
 }
