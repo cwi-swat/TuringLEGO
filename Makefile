@@ -18,7 +18,7 @@ $(PROGRAM).rxe: $(PROGRAM).nxc Makefile
 	$(NXC) -O=build/$(PROGRAM).rxe $(OPTIONS) $(PROGRAM).nxc
 
 download: $(PROGRAM).rxe
-	$(NXTCOM) $(USB) $(PROGRAM).rxe
+	$(NXTCOM) $(USB) build/$(PROGRAM).rxe
 
 clean:
 	/bin/rm -vf build/$(PROGRAM).rxe
