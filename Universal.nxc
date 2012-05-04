@@ -10,7 +10,6 @@
 #define TAPEMOTOR OUT_C
 #define TAPEMOTORANGLE ((8*360) + 155)
 
-
 #define JMP 1
 #define WRITE 2
 #define MOVE 3
@@ -48,7 +47,7 @@ inline void write0() {
 	RotateMotor(WRITEMOTOR, 20, 180);
 }
 
-inline int getLineCount(string filename) {
+inline int getLineCount(string fileName) {
 	byte fid = fopen(fileName, "r");
 	int lineCount = 0;
 	while (true) {
@@ -63,65 +62,67 @@ inline int getLineCount(string filename) {
 	return lineCount;
 }
 
-inline string getLines(string fileName) {
+inline void getLines(string fileName, string &lines[]) {
 	int lineCount = getLineCount(fileName);
 	byte fid = fopen(fileName, "r");
-	string[] result;
-	ArrayInit(result, "", lineCount);
+	ArrayInit(lines, "", lineCount);
 	for (int i=0; i < lineCount; i++) {
 		string line;
 		fgets(line, 20, fid);
-		result[i] = line;
+		lines[i] = line;
 	}
 	fclose(fid);
-	return result;
 }
-
-int[][] parseTuringCommands(string[] lines) {
-	int[][] result;
-	int[] template = {0,0,0};
-	ArrayInit(result, template, ArrayLen(lines));
-	for (int i=0; i < ArrayLen(lines); i++) {
-		if (lines[i][0] == 'J') {
-			result[i][0] = JMP;
-			if (lines[i][1] == '_') {
-				result[i][1] = 2;
-			}
-			else if (lines[i][1] == '1' ){
-				result[i][1] = 1;
-			}
-			string number = SubStr(lines[i], 2, StrLen(lines[i]) - 2);
-			string rest;
-			result[i][2] = strtol(number, rest);
-		}
-		else if (lines[i][0] == 'M') {
-			result[i][0] = MOVE;
-			if (lines[i][1] == 'F') {
-				result[i][0] = 1;
-			}
-			else {
-				result[i][0] = -1;
-			}
-		}
-		else if (lines[i][0] == 'W') {
-			result[i][0] = WRITE;
-			if (lines[i][1] == '1') {
-				result[i][0] = 1;
-			}
-			else {
-				result[i][0] = 0;
-			}
-		}
-		else {
-			TextOut(1, LCD_LINE1, StrCat("Error: ", lines[i]));
-		}
-	}
-	return result;
-}
-
-
 
 task main() {
-	
+	string instructions[];
+	getLines("bitflip.tur", instructions);
+	unsigned int IP = 0;
+	unsigned int programSize = ArrayLen(instructions);
+	while (IP < programSize) {
+		string currentInstruction = instructions[IP];
+		if (currentInstruction[0] == 'J') {
+			bool doJmp = false;
+			if (currentInstruction[1] == '_') {
+				doJmp = true;
+			}
+			else if (currentInstruction[1] == '1' ){
+				doJmp = readBit() == 1;
+			}
+			else {
+				doJmp = readBit() == 0;
+			}
+			if (doJmp) {
+				string number = SubStr(currentInstruction, 2, StrLen(currentInstruction) - 2);
+				string rest;
+				IP = strtol(number, rest) - 1;
+			}
+			else {
+				IP++;
+			}
+		}
+		else if (currentInstruction[0] == 'M') {
+			if (currentInstruction[1] == 'F') {
+				incrementTapePosition();
+			}
+			else {
+				decrementTapePosition();
+			}
+			IP++;
+		}
+		else if (currentInstruction[0] == 'W') {
+			if (currentInstruction[1] == '1') {
+				write1();
+			}
+			else {
+				write0();
+			}
+			IP++;
+		}
+		else{
+			TextOut(1, LCD_LINE1, StrCat("Error: ", currentInstruction));
+		}
+	}
+	TextOut(1, LCD_LINE1, "End reached");
 
 }
