@@ -81,6 +81,8 @@ task main() {
 	unsigned int programSize = ArrayLen(instructions);
 	while (IP < programSize) {
 		string currentInstruction = instructions[IP];
+		TextOut(1, LCD_LINE2, StrCat("IP:  ", NumToStr(IP)));
+		TextOut(1, LCD_LINE3, StrCat("CMD: ", currentInstruction));
 		if (currentInstruction[0] == 'J') {
 			bool doJmp = false;
 			if (currentInstruction[1] == '_') {
