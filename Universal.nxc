@@ -10,11 +10,6 @@
 #define TAPEMOTOR OUT_C
 #define TAPEMOTORANGLE ((8*360) + 155)
 
-#define JMP 1
-#define WRITE 2
-#define MOVE 3
-
-
 byte readBit() {
 	RotateMotor(SCANNERMOTOR, 20, -SCANNORMOTORDIPANGLE);
 	Wait(200);
@@ -69,11 +64,22 @@ inline int getLineCount(string fileName) {
 	}
 }
 
+enum Command {
+	Unkown,
+	JumpAlways,
+	JumpSet,
+	JumpUnset,
+	MoveForward,
+	MoveBackward,
+	WriteSet,
+	WriteUnset
+};
 
-inline void readLines(string fileName, string &lines[]) {
+inline void parseFile(string fileName, Command &cmds[], long &targets[] ) {
 	int lineCount = getLineCount(fileName);
 	TextOut(1, LCD_LINE4, StrCat("lines:  ", NumToStr(lineCount)));
-	ArrayInit(lines, "", lineCount);
+	ArrayInit(cmds, Unkown, lineCount);
+	ArrayInit(targets, LONG_MAX, lineCount);
 
 	if (lineCount > 0) {
 		byte fid;
@@ -82,9 +88,38 @@ inline void readLines(string fileName, string &lines[]) {
 			for (unsigned int i=0; i < lineCount; i++) {
 				string line;
 				ReadLnString(fid, line);
-				lines[i] = line;
-				TextOut(1, LCD_LINE5, StrCat("read:  ", lines[i]));
-				Wait(100);
+				int strLen = StrLen(line);
+				if (strLen >= 2) {
+					string cmd = SubStr(line, 0, 2);
+					if (strLen > 2) {
+						string number = SubStr(line, 2, strLen - 2);
+						string rest;
+						targets[i] = strtol(number, rest);
+					}
+					switch (cmd) {
+						case "J_" : 
+							cmds[i] = JumpAlways;
+							break;
+						case "J1":
+							cmds[i] = JumpSet;
+							break;
+						case "J0":
+							cmds[i] = JumpUnset;
+							break;
+						case "MF":
+							cmds[i] = MoveForward;
+							break;
+						case "MB":
+							cmds[i] = MoveBackward;
+							break;
+						case "W1":
+							cmds[i] = WriteSet;
+							break;
+						case "W0":
+							cmds[i] = WriteUnset;
+							break;
+					}
+				}
 			}
 			CloseFile(fid);
 		}
@@ -94,53 +129,46 @@ inline void readLines(string fileName, string &lines[]) {
 task main() {
 	string instructions[];
 	string fileName = "bitflipper.txt";
-	readLines(fileName, instructions);
-	unsigned int IP = 0;
-	unsigned int programSize = ArrayLen(instructions);
+	Command cmds[];
+	long targets[];
+	parseFile(fileName, cmds, targets);
+	long IP = 0;
+	unsigned int programSize = ArrayLen(cmds);
 	while (IP < programSize) {
-		string currentInstruction = instructions[IP];
 		TextOut(1, LCD_LINE2, StrCat("IP:  ", NumToStr(IP)));
-		TextOut(1, LCD_LINE3, StrCat("CMD: ", currentInstruction));
-		if (currentInstruction[0] == 'J') {
-			bool doJmp = false;
-			if (currentInstruction[1] == '_') {
-				doJmp = true;
-			}
-			else if (currentInstruction[1] == '1' ){
-				doJmp = readBit() == 1;
-			}
-			else {
-				doJmp = readBit() == 0;
-			}
-			if (doJmp) {
-				string number = SubStr(currentInstruction, 2, StrLen(currentInstruction) - 2);
-				string rest;
-				IP = strtol(number, rest) - 1;
-			}
-			else {
-				IP++;
-			}
-		}
-		else if (currentInstruction[0] == 'M') {
-			if (currentInstruction[1] == 'F') {
+		TextOut(1, LCD_LINE2, StrCat("CMD: ", NumToStr(cmds[IP])));
+		bool doJump = false;
+		switch(cmds[IP]) {
+			case JumpAlways:
+				doJump = true;
+				break;
+			case JumpSet:
+				doJump = readBit() == 1;
+				break;
+			case JumpUnset:
+				doJump = readBit() == 0;
+				break;
+			case MoveForward:
 				incrementTapePosition();
-			}
-			else {
+				break;
+			case MoveBackward:
 				decrementTapePosition();
-			}
-			IP++;
-		}
-		else if (currentInstruction[0] == 'W') {
-			if (currentInstruction[1] == '1') {
+				break;
+			case WriteSet:
 				write1();
-			}
-			else {
+				break;
+			case WriteUnset:
 				write0();
-			}
-			IP++;
+				break;
+			default:
+				TextOut(1, LCD_LINE1, StrCat("Error: ", NumToStr(cmds[IP])));
+				break;
 		}
-		else{
-			TextOut(1, LCD_LINE1, StrCat("Error: ", currentInstruction));
+		if (doJump) {
+			IP = targets[IP] - 1;
+		}
+		else {
+			IP++;
 		}
 	}
 	TextOut(1, LCD_LINE1, "End reached");
