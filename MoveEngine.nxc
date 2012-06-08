@@ -1,0 +1,6 @@
+#define TAPEMOTOR OUT_C
+#define TAPEMOTORANGLE ((8*360) + 155)
+task main() {
+	RotateMotor(TAPEMOTOR, 80, (TAPEMOTORANGLE) * 20);	
+}
+

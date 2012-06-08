@@ -1,0 +1,183 @@
+#define SCANNERMOTOR OUT_A
+#define SCANNORMOTORDIPANGLE 73
+#define SCANNERSENSOR S1
+#define SCANNERTHRESHOLD 30
+#define DEBUGSENSOR
+
+#define WRITEMOTOR OUT_B
+
+
+#define TAPEMOTOR OUT_C
+#define TAPEMOTORANGLE ((8*360) + 155)
+
+byte readBit() {
+	RotateMotor(SCANNERMOTOR, 20, -SCANNORMOTORDIPANGLE);
+	Wait(200);
+
+	SetSensorColorGreen(SCANNERSENSOR);
+	ResetSensor(SCANNERSENSOR);
+	unsigned int val = Sensor(SCANNERSENSOR);
+	Wait(200);
+	val = Sensor(SCANNERSENSOR);
+#ifdef DEBUGSENSOR
+	TextOut(15, LCD_LINE4, StrCat("RAW: ", NumToStr(val)));	
+	if (val < SCANNERTHRESHOLD) {
+		TextOut(15, LCD_LINE5, "Result: 1");	
+	}
+	else {
+		TextOut(15, LCD_LINE5, "Result: 0");	
+	}
+#endif
+	SetSensorColorNone(SCANNERSENSOR);
+	ResetSensor(SCANNERSENSOR);
+
+	RotateMotor(SCANNERMOTOR, 30, SCANNORMOTORDIPANGLE);
+	Wait(10);
+	return val < SCANNERTHRESHOLD ? 1 : 0;
+}
+
+inline void incrementTapePosition() {
+	RotateMotor(TAPEMOTOR, 80, -TAPEMOTORANGLE);	
+}
+inline void decrementTapePosition() {
+	RotateMotor(TAPEMOTOR, 80, TAPEMOTORANGLE);	
+}
+
+inline void write1() {
+	RotateMotor(WRITEMOTOR, 20, -180);
+}
+inline void write0() {
+	RotateMotor(WRITEMOTOR, 20, 180);
+}
+
+inline int getLineCount(string fileName) {
+	byte fid;
+	int fileSize;
+	if (OpenFileRead(fileName, fileSize, fid) == LDR_SUCCESS) {
+		int lineCount = 0;
+		while (true) {
+			string line;
+			if (ReadLnString(fid, line) == LDR_SUCCESS) {
+				lineCount++;
+			}
+			else {
+				break;
+			}
+		}
+		CloseFile(fid);
+		return lineCount;
+	}
+	else {
+		return 0;
+	}
+}
+
+enum Command {
+	Unkown,
+	JumpAlways,
+	JumpSet,
+	JumpUnset,
+	MoveForward,
+	MoveBackward,
+	WriteSet,
+	WriteUnset
+};
+
+inline void parseFile(string fileName, Command &cmds[], long &targets[] ) {
+	int lineCount = getLineCount(fileName);
+	ArrayInit(cmds, Unkown, lineCount);
+	ArrayInit(targets, LONG_MAX, lineCount);
+
+	if (lineCount > 0) {
+		byte fid;
+		int fileSize;
+		if (OpenFileRead(fileName, fileSize, fid) == LDR_SUCCESS) {
+			for (unsigned int i=0; i < lineCount; i++) {
+				string line;
+				ReadLnString(fid, line);
+				int strLen = StrLen(line);
+				if (strLen >= 2) {
+					string cmd = SubStr(line, 0, 2);
+					if (strLen > 2) {
+						string number = SubStr(line, 2, strLen - 2);
+						string rest;
+						targets[i] = strtol(number, rest);
+					}
+					switch (cmd) {
+						case "J_" : 
+							cmds[i] = JumpAlways;
+							break;
+						case "J1":
+							cmds[i] = JumpSet;
+							break;
+						case "J0":
+							cmds[i] = JumpUnset;
+							break;
+						case "MF":
+							cmds[i] = MoveForward;
+							break;
+						case "MB":
+							cmds[i] = MoveBackward;
+							break;
+						case "W1":
+							cmds[i] = WriteSet;
+							break;
+						case "W0":
+							cmds[i] = WriteUnset;
+							break;
+					}
+				}
+			}
+			CloseFile(fid);
+		}
+	}
+}
+
+task main() {
+	string instructions[];
+	string fileName = "add.ctur";
+	Command cmds[];
+	long targets[];
+	parseFile(fileName, cmds, targets);
+	long IP = 0;
+	unsigned int programSize = ArrayLen(cmds);
+	while (IP < programSize) {
+		TextOut(1, LCD_LINE2, StrCat("IP:  ", NumToStr(IP)));
+		TextOut(1, LCD_LINE3, StrCat("CMD: ", NumToStr(cmds[IP])));
+		bool doJump = false;
+		switch(cmds[IP]) {
+			case JumpAlways:
+				doJump = true;
+				break;
+			case JumpSet:
+				doJump = readBit() == 1;
+				break;
+			case JumpUnset:
+				doJump = readBit() == 0;
+				break;
+			case MoveForward:
+				incrementTapePosition();
+				break;
+			case MoveBackward:
+				decrementTapePosition();
+				break;
+			case WriteSet:
+				write1();
+				break;
+			case WriteUnset:
+				write0();
+				break;
+			default:
+				TextOut(1, LCD_LINE1, StrCat("Error: ", NumToStr(cmds[IP])));
+				break;
+		}
+		if (doJump) {
+			IP = targets[IP] - 1;
+		}
+		else {
+			IP++;
+		}
+	}
+	TextOut(1, LCD_LINE1, "End reached");
+	Wait(4000);	
+}

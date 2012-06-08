@@ -10,7 +10,8 @@ OPTIONS=-Z2
 
 # Change the name of the program helloworld.rxe to be whatever you want
 # to name the final executable
-PROGRAM=Universal
+PROGRAM=Universal-Add
+#PROGRAM=MoveSensor
 
 all: $(PROGRAM).rxe download
 
