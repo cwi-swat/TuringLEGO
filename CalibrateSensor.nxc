@@ -1,11 +1,78 @@
+#define SCANNERMOTOR OUT_A
+#define SCANNORMOTORDIPANGLE 73
 #define SCANNERSENSOR S1
 
-task main() {
+#define TAPEMOTOR OUT_C
+#define TAPEMOTORANGLE ((8*360) + 155)
+
+unsigned int readValue() {
+	RotateMotor(SCANNERMOTOR, 20, -SCANNORMOTORDIPANGLE);
+	Wait(200);
+
 	SetSensorColorGreen(SCANNERSENSOR);
 	ResetSensor(SCANNERSENSOR);
-	while (true) {
-		unsigned int val = Sensor(SCANNERSENSOR);
-		TextOut(15, LCD_LINE2, StrCat("RAW: ", NumToStr(val)));	
-		Wait(10);
+	unsigned int val = Sensor(SCANNERSENSOR);
+	Wait(200);
+	val = Sensor(SCANNERSENSOR);
+	TextOut(1, LCD_LINE4, StrCat("RAW: ", NumToStr(val)));	
+	SetSensorColorNone(SCANNERSENSOR);
+	ResetSensor(SCANNERSENSOR);
+
+	RotateMotor(SCANNERMOTOR, 30, SCANNORMOTORDIPANGLE);
+	Wait(10);
+	return val;
+}
+
+inline void incrementTapePosition() {
+	RotateMotor(TAPEMOTOR, 80, -TAPEMOTORANGLE);	
+}
+inline void decrementTapePosition() {
+	RotateMotor(TAPEMOTOR, 80, TAPEMOTORANGLE);	
+}
+
+inline unsigned int min(unsigned int a, unsigned int b) {
+	return a < b ? a : b;
+}
+inline unsigned int max(unsigned int a, unsigned int b) {
+	return a > b ? a : b;
+}
+
+task main() {
+	TextOut(1, LCD_LINE1, "Prepare 0101");
+	unsigned int zero = UINT_MAX;
+	unsigned int one = 0;
+	for (int i =0; i < 2; i++) {
+		zero = min(zero, readValue());
+		incrementTapePosition();
+		one = max(one, readValue());
+		incrementTapePosition();
 	}
+	Wait(10);
+	// now move back..
+	for (int i =0; i < 2; i++) {
+		decrementTapePosition();
+		one = max(one, readValue());
+		decrementTapePosition();
+		zero = min(zero, readValue());
+	}
+	TextOut(1, LCD_LINE2, StrCat("max 1: ", NumToStr(one)));
+	TextOut(1, LCD_LINE3, StrCat("min 0: ", NumToStr(zero)));
+	unsigned int diff = zero - one;
+	TextOut(1, LCD_LINE4, StrCat("diff : ", NumToStr(diff)));
+	if (diff < 10) {
+		TextOut(1, LCD_LINE5, "!Not enough diff!");	
+	}
+	else {
+		unsigned int threshold = one + (diff / 2);
+		TextOut(1, LCD_LINE5, StrCat("Writing sensor threshold: ", NumToStr(threshold)));	
+		string thresholdValue = NumToStr(threshold);
+		byte fid;
+		unsigned int len = StrLen(thresholdValue);
+		if (CreateFile("sensor.calibrate", len, fid) == LDR_SUCCESS) {
+			unsigned int cnt;
+			WriteString(fid, thresholdValue, cnt);
+			CloseFile(fid);
+		}
+	}
+	Wait(10000);
 }

@@ -1,7 +1,8 @@
 #define SCANNERMOTOR OUT_A
 #define SCANNORMOTORDIPANGLE 73
 #define SCANNERSENSOR S1
-#define SCANNERTHRESHOLD 30
+unsigned int SCANNERTHRESHOLD = 30;
+//#define SCANNERTHRESHOLD 30
 #define DEBUGSENSOR
 
 #define WRITEMOTOR OUT_B
@@ -133,7 +134,21 @@ inline void parseFile(string fileName, Command &cmds[], long &targets[] ) {
 	}
 }
 
+void readScannerThreshold() {
+	byte fid;
+	int fileSize;
+	if (OpenFileRead("sensor.calibrate", fileSize, fid) == LDR_SUCCESS) {
+		string val;
+		ReadLnString(fid, val);
+		string rest;
+		SCANNERTHRESHOLD = strtol(val, rest);
+		TextOut(1, LCD_LINE1, StrCat("Calibrated: ", NumToStr(SCANNERTHRESHOLD)));
+		CloseFile(fid);
+	}
+}
+
 task main() {
+	readScannerThreshold();
 	string instructions[];
 	string fileName = "add.ctur";
 	Command cmds[];

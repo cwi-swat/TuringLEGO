@@ -12,6 +12,7 @@ OPTIONS=-Z2
 # to name the final executable
 PROGRAM=Universal-Add
 #PROGRAM=MoveSensor
+#PROGRAM=CalibrateSensor
 
 all: $(PROGRAM).rxe download
 
