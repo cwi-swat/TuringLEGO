@@ -12,17 +12,21 @@ byte readBit() {
 	SetSensorColorGreen(SCANNERSENSOR);
 	ResetSensor(SCANNERSENSOR);
 	unsigned int val = Sensor(SCANNERSENSOR);
-	Wait(400);
-	val = Sensor(SCANNERSENSOR);
-#ifdef DEBUGSENSOR
-	TextOut(15, LCD_LINE4, StrCat("RAW: ", NumToStr(val)));	
+	TextOut(15, LCD_LINE4, StrCat(StrCat("RAW: ", NumToStr(val)), "     "));	
+	for (int x=0; x < 9; x++) {
+		SetSensorColorGreen(SCANNERSENSOR);
+		ResetSensor(SCANNERSENSOR);
+		Wait(50);
+		val += Sensor(SCANNERSENSOR);
+	}
+	val = val / 10;
+	TextOut(15, LCD_LINE5, StrCat(StrCat("AVG: ", NumToStr(val)), "     "));	
 	if (val < SCANNERTHRESHOLD) {
-		TextOut(15, LCD_LINE5, "Result: 1");	
+		TextOut(15, LCD_LINE6, "Result: 1");	
 	}
 	else {
-		TextOut(15, LCD_LINE5, "Result: 0");	
+		TextOut(15, LCD_LINE6, "Result: 0");	
 	}
-#endif
 	SetSensorColorNone(SCANNERSENSOR);
 	ResetSensor(SCANNERSENSOR);
 
