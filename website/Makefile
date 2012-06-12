@@ -8,7 +8,8 @@ PACKAGES=$(MARKDOWN_JS) $(JADE)
 #PAGES= about.jade home.jade professional.jade publications.jade research.jade
 PAGES=
 
-site:  index.html styles/main.css scripts/main.js
+#site:  index.html styles/main.css scripts/main.js
+site:  index.html styles/main.css
 
 index.html: $(PAGES) index.jade $(PACKAGES) $(JADE_BIN)
 	$(JADE_BIN) index.jade	
