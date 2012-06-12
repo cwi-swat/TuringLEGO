@@ -1,0 +1,17 @@
++ *.html
++ *.css
++ *.pdf
++ *.png
++ *.jpg
++ *.js
+- *.sh
+- .git
+- Makefile
+- build*
+- node_modules
+- libs
+- kqwait
+- *.coffee
+- *.jade
+- *.styl
+- *.psd
