@@ -35,5 +35,5 @@ $(MARKDOWN_JS):
 	npm install markdown-js
 
 deploy: site
-	rsync -rv --include-from=rsync.includes . rascal-site:www.rascal-mpl.org/www/pub/TuringMachine/
+	rsync -rv --include-from=rsync.includes . rascal-site:www.legoturingmachine.org/
 # DO NOT DELETE

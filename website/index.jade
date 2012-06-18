@@ -4,6 +4,15 @@ html
 		title LEGO Turing Machine
 		link(rel='stylesheet', href='styles/normalize.css')
 		link(rel='stylesheet', href='styles/main.css')
+		script(type="text/javascript")
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-560596-11']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = 'http://www.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
 	body
 		h1 A Turing Machine built using LEGO
 		img#head(src='images/global.jpg', width='640px', height='480px')
