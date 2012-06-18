@@ -5,42 +5,75 @@ html
 		link(rel='stylesheet', href='styles/normalize.css')
 		link(rel='stylesheet', href='styles/main.css')
 	body
-		h1 A Turing Machine build using LEGO
+		h1 A Turing Machine built using LEGO
 		img#head(src='images/global.jpg', width='640px', height='480px')
 		
 		nav
-			a(href="#Video") Video
-			a(href="#Turing") Turing Machine?
-			a(href="#LEGO") Lego
-			a(href="#Software") Software
+			a(href="#Video") Short documentary
+			a(href="#Turing") The Turing Machine
+			a(href="#Hardware") Hardware: LEGO
+			a(href="#Software") Software: Rascal
 			a(href="#Credits") Credits
 
 		section#Video
 			h2 Video
 			object(width="720px", heigh="405px")
 			p
-				| Filmography thanks to Andre Theelen of ecalpemos.nl
+				| Short documentary by Andre Theelen of ecalpemos.nl
 
 		section#Turing
-			h2 Turing Machine?
+			h2 The Turing Machine
 			p
-				| A Turing machine is a device that manipulates symbols 
-				| on a tape according to a table of rules (its ``program'').
-				| It is able to simulate the logic of any computer program,
-				| and is particularly useful in explaining what 
-				| a computer can do.
+			  | According to
+			  a(href=http://en.wikipedia.org/wiki/Turing_machine) Wikipedia
+			  | :
+			p
+			  | "A Turing machine is a device that manipulates symbols on a strip
+			  | of tape according to a table of rules. Despite its simplicity, a
+			  | Turing machine can be adapted to simulate the logic of any computer
+			  | algorithm, and is particularly useful in explaining the functions
+			  | of a CPU inside a computer."
+			p
+			  | Unlike what the name suggests, it is not a physical machine but
+			  | rather a theoretical model. It's very simply, but describes the
+			  | fundamental capabilities of practically all computers in use today.
+			  | This means that if something can be done on a computer, it can also
+			  | be done on a Turing machine. This makes it a great model for
+			  | scientists to use to discover the limits of computers (e.g.
+			  | complexity theory) and also to show to a broad audience how a
+			  | computer fundamentally operates.
+			p
+			  | However, abstract models are just that, an abstraction of
+			  | something. In order to really show how simple the fundamental
+			  | model of a computer is, we have developed a physical
+			  | implementation of the Turing machine, using LEGO Mindstorms NXT.
 
 		section#LEGO
 			h2 LEGO
 			p
-				| A description of the LEGO challenges for our machine.
-				| And a teaser link to a possible ready-made kit.
+				| Our LEGO Turing machine uses a tape based on a classic
+				| interpretation of computer memory: switches. Additionally, it uses
+				| a light sensor to determine the value of a switch: if the switch is
+				| on, the sensor will
+				i see
+				| the black colour of the switch's surface. But if it is turned off,
+				| the sensor will
+				i see
+				| the white colour of the LEGO beam, making it possible to
+				| distinguish between the states. Finally, a rotating beam mounted
+				| above the tape can flip the switch in both directions.
 
 		section#Software
 			h2 Software
 			p
-				| Link to github and rascal svn. Also discuss rascal,
-				| turing language, and NXC.
+			  | The software we have developed to execute programs in a basic
+			  | Turing machine language can be found on
+			  a(href=) github
+			  | Additionally, we have developed an interactive development
+			  | environment (IDE) using the
+			  (a href=http://www.rascal-mpl.org) Rascal Metaprogramming Language
+			  | which is stored in our public
+			  (a href=) subversion repository
 
 		section#Credits
 			h2 Credits
@@ -53,7 +86,7 @@ html
 				li Jeroen van den Bos (CWI/NFI)
 				li Davy Landman (CWI)
 
-			h3 Contributed to
+			h3 Additional contributions by
 			ul
 				li Karin Blankers (CWI)
 				li Paul Klint (CWI)
