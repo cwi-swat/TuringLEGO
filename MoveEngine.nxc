@@ -1,6 +1,27 @@
 #define TAPEMOTOR OUT_C
-#define TAPEMOTORANGLE ((8*360) + 155)
+#define TAPEMOTORANGLE ((8*360) + 120)
+inline void moveTape() {
+	//RotateMotor(TAPEMOTOR, 50, -100);	
+	//RotateMotor(TAPEMOTOR, 100, -(TAPEMOTORANGLE-200));	
+	//RotateMotor(TAPEMOTOR, 80, -100);	
+	RotateMotor(TAPEMOTOR, 80, -TAPEMOTORANGLE);	
+}
 task main() {
-	RotateMotor(TAPEMOTOR, 80, (TAPEMOTORANGLE) * 20);	
+	moveTape();	
+	Wait(1000);
+	moveTape();	
+	Wait(1000);
+	moveTape();	
+	Wait(1000);
+	moveTape();	
+	Wait(1000);
+	moveTape();	
+	Wait(1000);
+	moveTape();	
+	Wait(1000);
+	moveTape();	
+	Wait(1000);
+	moveTape();	
+	Wait(1000);
 }
 

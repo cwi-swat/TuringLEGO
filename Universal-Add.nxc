@@ -9,7 +9,8 @@ unsigned int SCANNERTHRESHOLD = 30;
 
 
 #define TAPEMOTOR OUT_C
-#define TAPEMOTORANGLE ((8*360) + 155)
+//#define TAPEMOTORANGLE ((8*360) + 155)
+#define TAPEMOTORANGLE ((8*360) + 120)
 
 byte readBit() {
 	RotateMotor(SCANNERMOTOR, 20, -SCANNORMOTORDIPANGLE);
