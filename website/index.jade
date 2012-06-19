@@ -15,7 +15,14 @@ html
 			})();
 	body
 		h1 A Turing Machine built using LEGO
-		img#head(src='images/global.jpg', width='640px', height='480px')
+		section#Introduction
+			h2 In honor of the Alan Turing year 2012
+			img#head(src='images/global.jpg', width='640px', height='480px')
+			p
+				| To honor Alan Turing, we built a simple LEGO Turing Machine, to show everyone how simple
+				| a computer actually is.
+				| Primary goals were to make every operation as visible as possible and to make it using just
+				| a single LEGO MINDSTORMS NXT set.
 		
 		nav
 			a(href="#Video") Short documentary
@@ -79,6 +86,29 @@ html
 				| the white colour of the LEGO beam, making it possible to
 				| distinguish between the states. Finally, a rotating beam mounted
 				| above the tape can flip the switch in both directions.
+
+			p
+				| Alan Turing's original model has an infinite tape,
+				| but LEGO had a slight problem supplying infinite bricks.
+				| So we chose to fix our tape size to 32 positions.
+
+			h3 Instructions
+			p
+				| Since we only have 32 positions, and the most basic alphabet, 
+				| it would be difficult to encode our instructions on the same tape as
+				| the input.
+				| Another goal was to make the device tamper proof, such that it could be
+				| operated by visitors off the exhibition.
+				| Therefore, to avoid limiting the instruction size and to protect the running program,
+				| we chose to write the instructions to a file on the NXT brick and uses the simplest 
+				| interpreter to run these instructions.
+
+			h3 Basic instruction set
+			pre
+				| W(0|1) = write either 0 or 1 on the tape
+				| M(F|B) = move the tape either forward or backward
+				| J(_|0|1)[0-9]+ = jump (always, when 0, when 1) to another line in the instruction table
+
 
 		section#Software
 			h2 Software
