@@ -29,11 +29,13 @@ html
 				&nbsp;
 				| at CWI.
 		
+		a#leftLogo(href="http://www.rascal-mpl.org", target="_blank"): img(src="images/RASCAL.png", height="75px")
+		a#rightLogo(href="http://www.cwi.nl", target="_blank"): img(src="images/CWI.png", height="50px")
 		nav
 			a(href="#Video") Short documentary
 			a(href="#Turing") The Turing Machine
-			a(href="#Hardware") Hardware: LEGO
-			a(href="#Software") Software: Rascal
+			a(href="#Hardware") Hardware
+			a(href="#Software") Software
 			a(href="#Credits") Credits
 
 		section#Video
@@ -74,7 +76,7 @@ html
 				| implementation of the Turing machine, using LEGO Mindstorms NXT.
 
 		section#LEGO
-			h2 LEGO
+			h2 Hardware: LEGO
 			p
 				| Our LEGO Turing machine uses a tape based on a classic
 				| interpretation of computer memory: switches. Additionally, it uses
@@ -112,11 +114,14 @@ html
 			pre
 				| W(0|1) = write either 0 or 1 on the tape
 				| M(F|B) = move the tape either forward or backward
-				| J(_|0|1)[0-9]+ = jump (always, when 0, when 1) to another line in the instruction table
+				| J(_|0|1)[0-9]+ = read & jump (always, when 0, or when 1) to a row in the instruction table
+			p
+				| The instructions running in the video can be found in <a href="https://github.com/DavyLandman/TuringLEGO/blob/master/example/add.ctur">this file on github</a>.
+				| It implements a simple adder of two numbers.
 
 
 		section#Software
-			h2 Software
+			h2 Software: Rascal
 			p
 				| The software we have developed to execute programs in a basic
 				| Turing machine language can be found on
@@ -126,11 +131,12 @@ html
 				| Additionally, we have developed an interactive development
 				| environment (IDE) using the
 				&nbsp;
-				a(href="http://www.rascal-mpl.org", target="_blank") Rascal Metaprogramming Language
+				a(href="http://www.rascal-mpl.org", target="_blank") Rascal Meta-programming Language
 				&nbsp;
 				| which is stored in our public
 				&nbsp;
 				a(href="http://svn.rascal-mpl.org/rascal/trunk/src/org/rascalmpl/library/demo/lang/turing/", target="_blank") subversion repository
+
 
 		section#Credits
 			h2 Credits
@@ -141,14 +147,15 @@ html
 			h3 Built by
 			ul
 				li Jeroen van den Bos (CWI/NFI)
-				li Davy Landman (CWI)
+				li: a(href="http://homepages.cwi.nl/~landman/", target="_blank") Davy Landman (CWI)
 
 			h3 Additional contributions by
 			ul
 				li Karin Blankers (CWI)
-				li Paul Klint (CWI)
+				li: a(href="http://homepages.cwi.nl/~paulk/", target="_blank") Paul Klint (CWI)
 				li Atze van der Ploeg (CWI)
-				li Tijs van der Storm (CWI)
-				li Jurgen Vinju (CWI)
+				li: a(href="http://homepages.cwi.nl/~storm/", target="_blank") Tijs van der Storm (CWI)
+				li: a(href="http://homepages.cwi.nl/~jurgenv/", target="_blank") Jurgen Vinju (CWI)
+				li: a(href="http://www.cwi.nl/research-groups/Software-Analysis-and-Transformation", target="_blank") Software Analysis and Transformation Team
 
 

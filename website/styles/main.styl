@@ -46,6 +46,7 @@ body
 	margin-bottom: 20px
 	border: 1px solid borderColor
 	padding: 1em
+	position: relative
 
 a
 	color: linkColor
@@ -98,3 +99,26 @@ section
 	p
 		color: headerLinkColor
 		font-size: 0.9em
+
+pre
+	margin-left: 1em
+	font-size: 0.8em
+	font-family: Monaco, Andale Mono, Consolas, Courier New, monospace
+
+#leftLogo,
+#rightLogo
+	opacity 0.5
+	position: absolute
+
+#leftLogo:hover,
+#rightLogo:hover
+	opacity 0.7
+
+#leftLogo
+	left: 1em
+	top: 1em
+	
+
+#rightLogo
+	right: 2.5em
+	top: 2.5em
