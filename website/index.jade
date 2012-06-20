@@ -25,7 +25,7 @@ html
 				| a single LEGO MINDSTORMS NXT set.
 				| The LEGO Turing Machine is part of the exhibition
 				&nbsp;
-				a(href="http://www.cwi.nl/news/2012/exhibition-turings-erfenis-at-centrum-wiskunde-informatica-opens-it-doors") Turing's Erfenis
+				a(href="http://www.cwi.nl/news/2012/exhibition-turings-erfenis-at-centrum-wiskunde-informatica-opens-it-doors", target="_blank") Turing's Erfenis
 				&nbsp;
 				| at CWI.
 		
@@ -52,7 +52,7 @@ html
 			p
 				| According to
 				&nbsp;
-				a(href="http://en.wikipedia.org/wiki/Turing_machine") Wikipedia
+				a(href="http://en.wikipedia.org/wiki/Turing_machine", target="_blank") Wikipedia
 				| :
 			p
 				| "A Turing machine is a device that manipulates symbols on a strip
@@ -75,21 +75,14 @@ html
 				| model of a computer is, we have developed a physical
 				| implementation of the Turing machine, using LEGO Mindstorms NXT.
 
-		section#LEGO
+		section#Hardware
 			h2 Hardware: LEGO
 			p
 				| Our LEGO Turing machine uses a tape based on a classic
 				| interpretation of computer memory: switches. Additionally, it uses
 				| a light sensor to determine the value of a switch: if the switch is
-				| on, the sensor will
-				&nbsp;
-				i see
-				&nbsp;
-				| the black colour of the switch's surface. But if it is turned off,
-				| the sensor will
-				&nbsp;
-				i see
-				&nbsp;
+				| on, the sensor will <i>see</i> the black colour of the switch's surface. 
+				| But if it is turned off, the sensor will <i>see</i>
 				| the white colour of the LEGO beam, making it possible to
 				| distinguish between the states. Finally, a rotating beam mounted
 				| above the tape can flip the switch in both directions.
@@ -116,7 +109,7 @@ html
 				| M(F|B) = move the tape either forward or backward
 				| J(_|0|1)[0-9]+ = read & jump (always, when 0, or when 1) to a row in the instruction table
 			p
-				| The instructions running in the video can be found in <a href="https://github.com/DavyLandman/TuringLEGO/blob/master/example/add.ctur">this file on github</a>.
+				| The instructions running in the video can be found in <a href="https://github.com/DavyLandman/TuringLEGO/blob/master/example/add.ctur" target="_blank">this file on github</a>.
 				| It implements a simple adder of two numbers.
 
 
@@ -136,6 +129,7 @@ html
 				| which is stored in our public
 				&nbsp;
 				a(href="http://svn.rascal-mpl.org/rascal/trunk/src/org/rascalmpl/library/demo/lang/turing/", target="_blank") subversion repository
+				| .
 
 
 		section#Credits
