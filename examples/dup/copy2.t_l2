@@ -1,0 +1,46 @@
+MF
+J0 stop
+L loop
+  J0 exit
+  W0
+  REP 2 {
+    L skip
+      MF
+      J1 skip
+  }
+  W1
+  REP 2 {
+    L back
+      MB
+      J1 back
+  }
+  W1
+  MF
+  J1 loop
+L back2
+  MB
+  J1 back2
+  MF
+L loop2
+  J0 exit
+  W0
+  REP 2 {
+    L skip2
+      MF
+      J1 skip2
+  }
+  W1
+  REP 2 {
+    L back3
+      MB
+      J1 back3
+  }
+  W1
+  MF
+  J1 loop2
+L exit
+L end
+  MF
+  J1 end
+L stop
+
