@@ -1,0 +1,73 @@
+J0 stop
+W0
+L skip
+  MF
+  J1 skip
+  MF
+  J_ copy
+L copy
+  W0
+  REP 2 {
+    L skip2
+      MF
+      J1 skip2
+  }
+  W1
+  REP 2 {
+    L back
+      MB
+      J1 back
+  }
+  W1
+  MF
+  J0 end
+  J1 copy
+L end
+  REP 2 {
+    L back2
+      MB
+      J1 back2
+  }
+  W1
+  MF
+  J0 stop
+L mainloop
+  W0
+L skip3
+  MF
+  J1 skip3
+  MF
+  J0 exit
+L incby
+  W0
+  REP 2 {
+    L skip4
+      MF
+      J1 skip4
+  }
+  W1
+  REP 2 {
+    L back3
+      MB
+      J1 back3
+  }
+  W1
+  MF
+  J1 incby
+  REP 2 {
+    L back4
+      MB
+      J1 back4
+  }
+  W1
+  MF
+  J1 mainloop
+L exit
+  MF
+  REP 2 {
+    L skip5
+      MF
+      J1 skip5
+  }
+L stop
+
