@@ -1,0 +1,19 @@
+J0 stop
+L incby
+  W0
+  REP 2 {
+    L skip4
+      MF
+      J1 skip4
+  }
+  W1
+  REP 2 {
+    L back3
+      MB
+      J1 back3
+  }
+  W1
+  MF
+  J1 incby
+L stop
+

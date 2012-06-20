@@ -1,0 +1,8 @@
+J0 stop
+L skip
+  MF
+  J1 skip
+  W1
+  MF
+L stop
+
