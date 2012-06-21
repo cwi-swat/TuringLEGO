@@ -4,6 +4,8 @@ html
 		title LEGO Turing Machine
 		link(rel='stylesheet', href='styles/normalize.css')
 		link(rel='stylesheet', href='styles/main.css')
+		link(rel="stylesheet", href="/fancybox/jquery.fancybox-1.3.4.css")
+		
 		script(type="text/javascript")
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-560596-11']);
@@ -14,149 +16,177 @@ html
 				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
 	body
-		h1 A Turing Machine built using LEGO
-		section#Introduction
-			h2 In honor of the Alan Turing year 2012
-			img#head(src='images/global.jpg', width='525px', height='394px')
-			p
-				| To honor Alan Turing, we built a simple LEGO Turing Machine, to show everyone how simple
-				| a computer actually is.
-				| Primary goals were to make every operation as visible as possible and to make it using just
-				| a single LEGO MINDSTORMS NXT set.
-				| The LEGO Turing Machine is part of the exhibition
-				&nbsp;
-				a(href="http://www.cwi.nl/news/2012/exhibition-turings-erfenis-at-centrum-wiskunde-informatica-opens-it-doors", target="_blank") Turing's Erfenis
-				&nbsp;
-				| at CWI.
-			.addthis_toolbox.addthis_default_style
-				<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-				<a class="addthis_button_tweet"></a>
-				<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-				<a class="addthis_counter addthis_pill_style"></a>
-			script(type="text/javascript", src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4fe2d59a04c25a0d")
-		
-		a#leftLogo(href="http://www.rascal-mpl.org", target="_blank"): img(src="images/RASCAL.png", height="75px")
-		a#rightLogo(href="http://www.cwi.nl", target="_blank"): img(src="images/CWI.png", height="50px")
-		nav
-			a(href="#Video") Short documentary
-			a(href="#Turing") The Turing Machine
-			a(href="#Hardware") Hardware
-			a(href="#Software") Software
-			a(href="#Credits") Credits
+		#mainContainer
+			h1 A Turing Machine built using LEGO
+			section#Introduction
+				h2 In honor of the Alan Turing year 2012
+				img#head(src='images/global.jpg', width='525px', height='394px')
+				p
+					| To honor Alan Turing, we built a simple LEGO Turing Machine, to show everyone how simple
+					| a computer actually is.
+					| Primary goals were to make every operation as visible as possible and to make it using just
+					| a single LEGO MINDSTORMS NXT set.
+					| The LEGO Turing Machine is part of the exhibition
+					&nbsp;
+					a(href="http://www.cwi.nl/news/2012/exhibition-turings-erfenis-at-centrum-wiskunde-informatica-opens-it-doors", target="_blank") Turing's Erfenis
+					&nbsp;
+					| at CWI.
+				.addthis_toolbox.addthis_default_style
+					<a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+					<a class="addthis_button_tweet"></a>
+					<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+					<a class="addthis_counter addthis_pill_style"></a>
+				script(type="text/javascript", src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4fe2d59a04c25a0d")
+			
+			a#leftLogo(href="http://www.rascal-mpl.org", target="_blank"): img(src="images/RASCAL.png", height="75px")
+			a#rightLogo(href="http://www.cwi.nl", target="_blank"): img(src="images/CWI.png", height="50px")
+			nav
+				a(href="#Video") Short documentary
+				a(href="#Turing") The Turing Machine
+				a(href="#Hardware") Hardware
+				a(href="#Software") Software
+				a(href="#Gallery") Gallery 
+				a(href="#Credits") Credits
 
-		section#Video
-			h2 Video
-			.vimeo
-				<iframe src="http://player.vimeo.com/video/44202270" width="650" height="277" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
-			p
-				| Short documentary by Andre Theelen of 
-				&nbsp;
-				a(href="http://www.ecalpemos.nl", target="_blank") ecalpemos.nl
+			section#Video
+				h2 Video
+				.vimeo
+					<iframe src="http://player.vimeo.com/video/44202270" width="650" height="277" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+				p
+					| Short documentary by Andre Theelen of 
+					&nbsp;
+					a(href="http://www.ecalpemos.nl", target="_blank") ecalpemos.nl
 
-		section#Turing
-			h2 The Turing Machine
-			p
-				| According to
-				&nbsp;
-				a(href="http://en.wikipedia.org/wiki/Turing_machine", target="_blank") Wikipedia
-				| :
-			p
-				| "A Turing machine is a device that manipulates symbols on a strip
-				| of tape according to a table of rules. Despite its simplicity, a
-				| Turing machine can be adapted to simulate the logic of any computer
-				| algorithm, and is particularly useful in explaining the functions
-				| of a CPU inside a computer."
-			p
-				| Unlike what the name suggests, it is not a physical machine but
-				| rather a theoretical model. It's very simply, but describes the
-				| fundamental capabilities of practically all computers in use today.
-				| This means that if something can be done on a computer, it can also
-				| be done on a Turing machine. This makes it a great model for
-				| scientists to use to discover the limits of computers (e.g.
-				| complexity theory) and also to show to a broad audience how a
-				| computer fundamentally operates.
-			p
-				| However, abstract models are just that, an abstraction of
-				| something. In order to really show how simple the fundamental
-				| model of a computer is, we have developed a physical
-				| implementation of the Turing machine, using LEGO Mindstorms NXT.
+			section#Turing
+				h2 The Turing Machine
+				p
+					| According to
+					&nbsp;
+					a(href="http://en.wikipedia.org/wiki/Turing_machine", target="_blank") Wikipedia
+					| :
+				p
+					| "A Turing machine is a device that manipulates symbols on a strip
+					| of tape according to a table of rules. Despite its simplicity, a
+					| Turing machine can be adapted to simulate the logic of any computer
+					| algorithm, and is particularly useful in explaining the functions
+					| of a CPU inside a computer."
+				p
+					| Unlike what the name suggests, it is not a physical machine but
+					| rather a theoretical model. It's very simply, but describes the
+					| fundamental capabilities of practically all computers in use today.
+					| This means that if something can be done on a computer, it can also
+					| be done on a Turing machine. This makes it a great model for
+					| scientists to use to discover the limits of computers (e.g.
+					| complexity theory) and also to show to a broad audience how a
+					| computer fundamentally operates.
+				p
+					| However, abstract models are just that, an abstraction of
+					| something. In order to really show how simple the fundamental
+					| model of a computer is, we have developed a physical
+					| implementation of the Turing machine, using LEGO Mindstorms NXT.
 
-		section#Hardware
-			h2 Hardware: LEGO
-			p
-				| Our LEGO Turing machine uses a tape based on a classic
-				| interpretation of computer memory: switches. Additionally, it uses
-				| a light sensor to determine the value of a switch: if the switch is
-				| on, the sensor will <i>see</i> the black colour of the switch's surface. 
-				| But if it is turned off, the sensor will <i>see</i>
-				| the white colour of the LEGO beam, making it possible to
-				| distinguish between the states. Finally, a rotating beam mounted
-				| above the tape can flip the switch in both directions.
+			section#Hardware
+				h2 Hardware: LEGO
+				p
+					| Our LEGO Turing machine uses a tape based on a classic
+					| interpretation of computer memory: switches. Additionally, it uses
+					| a light sensor to determine the value of a switch: if the switch is
+					| on, the sensor will <i>see</i> the black colour of the switch's surface. 
+					| But if it is turned off, the sensor will <i>see</i>
+					| the white colour of the LEGO beam, making it possible to
+					| distinguish between the states. Finally, a rotating beam mounted
+					| above the tape can flip the switch in both directions.
 
-			p
-				| Alan Turing's original model has an infinite tape,
-				| but LEGO had a slight problem supplying infinite bricks.
-				| So we chose to fix our tape size to 32 positions.
+				p
+					| Alan Turing's original model has an infinite tape,
+					| but LEGO had a slight problem supplying infinite bricks.
+					| So we chose to fix our tape size to 32 positions.
 
-			h3 Instructions
-			p
-				| Since we only have 32 positions, and the most basic alphabet, 
-				| it would be difficult to encode our instructions on the same tape as
-				| the input.
-				| Another goal was to make the device tamper proof, such that it could be
-				| operated by visitors off the exhibition.
-				| Therefore, to avoid limiting the instruction size and to protect the running program,
-				| we chose to write the instructions to a file on the NXT brick and uses the simplest 
-				| interpreter to run these instructions.
+				h3 Instructions
+				p
+					| Since we only have 32 positions, and the most basic alphabet, 
+					| it would be difficult to encode our instructions on the same tape as
+					| the input.
+					| Another goal was to make the device tamper proof, such that it could be
+					| operated by visitors off the exhibition.
+					| Therefore, to avoid limiting the instruction size and to protect the running program,
+					| we chose to write the instructions to a file on the NXT brick and uses the simplest 
+					| interpreter to run these instructions.
 
-			h3 Basic instruction set
-			pre
-				| W(0|1) = write either 0 or 1 on the tape
-				| M(F|B) = move the tape either forward or backward
-				| J(_|0|1)[0-9]+ = read & jump (always, when 0, or when 1) to a row in the instruction table
-			p
-				| The instructions running in the video can be found in <a href="https://github.com/DavyLandman/TuringLEGO/blob/master/examples/add/add.ctur" target="_blank">this file on github</a>.
-				| It implements a simple adder of two numbers.
-
-
-		section#Software
-			h2 Software: Rascal
-			p
-				| The software we have developed to execute programs in a basic
-				| Turing machine language can be found on
-				&nbsp;
-				a(href="https://github.com/DavyLandman/TuringLEGO", target="_blank") github
-				&nbsp;
-				| Additionally, we have developed an interactive development
-				| environment (IDE) using the
-				&nbsp;
-				a(href="http://www.rascal-mpl.org", target="_blank") Rascal Meta-programming Language
-				&nbsp;
-				| which is stored in our public
-				&nbsp;
-				a(href="http://svn.rascal-mpl.org/rascal/trunk/src/org/rascalmpl/library/demo/lang/turing/", target="_blank") subversion repository
-				| .
+				h3 Basic instruction set
+				pre
+					| W(0|1) = write either 0 or 1 on the tape
+					| M(F|B) = move the tape either forward or backward
+					| J(_|0|1)[0-9]+ = read & jump (always, when 0, or when 1) to a row in the instruction table
+				p
+					| The instructions running in the video can be found in <a href="https://github.com/DavyLandman/TuringLEGO/blob/master/examples/add/add.ctur" target="_blank">this file on github</a>.
+					| It implements a simple adder of two numbers.
 
 
-		section#Credits
-			h2 Credits
-				.image-credits
-					a(href="http://www.cwi.nl", target="_blank"): img(src="images/CWI.png", height="75px")
-					a(href="http://www.rascal-mpl.org", target="_blank"): img(src="images/RASCAL.png", height="75px")
-					a(href="http://www.lego.nl", target="_blank"): img(src="images/LEGO.png", height="75px")
-			h3 Built by
-			ul
-				li Jeroen van den Bos (CWI/NFI)
-				li: a(href="http://homepages.cwi.nl/~landman/", target="_blank") Davy Landman (CWI)
+			section#Software
+				h2 Software: Rascal
+				p
+					| The software we have developed to execute programs in a basic
+					| Turing machine language can be found on
+					&nbsp;
+					a(href="https://github.com/DavyLandman/TuringLEGO", target="_blank") github
+					&nbsp;
+					| Additionally, we have developed an interactive development
+					| environment (IDE) using the
+					&nbsp;
+					a(href="http://www.rascal-mpl.org", target="_blank") Rascal Meta-programming Language
+					&nbsp;
+					| which is stored in our public
+					&nbsp;
+					a(href="http://svn.rascal-mpl.org/rascal/trunk/src/org/rascalmpl/library/demo/lang/turing/", target="_blank") subversion repository
+					| .
 
-			h3 Additional contributions by
-			ul
-				li Karin Blankers (CWI)
-				li: a(href="http://homepages.cwi.nl/~paulk/", target="_blank") Paul Klint (CWI)
-				li Atze van der Ploeg (CWI)
-				li: a(href="http://homepages.cwi.nl/~storm/", target="_blank") Tijs van der Storm (CWI)
-				li: a(href="http://homepages.cwi.nl/~jurgenv/", target="_blank") Jurgen Vinju (CWI)
-				li: a(href="http://grammarware.net", target="_blank") Vadim Zaytsev (CWI)
-				li: a(href="http://www.cwi.nl/research-groups/Software-Analysis-and-Transformation", target="_blank") Software Analysis and Transformation Team
+			section#Gallery
+				h2 Gallery
+				p.images
+					| Click on the images below for a larger version.
+					br
+					a(href="images/LTM_Overview1.jpg", rel="gallery", title="LEGO Turing Machine (95 x 30 x 20 cm)"): img(src="images/thumbs/LTM_Overview1.jpg")
+					a(href="images/LTM_Overview2.jpg", rel="gallery", title="LEGO Turing Machine (95 x 30 x 20 cm)"): img(src="images/thumbs/LTM_Overview2.jpg")
+					a(href="images/LTM_Detail2.jpg", rel="gallery", title="Detail shot"): img(src="images/thumbs/LTM_Detail2.jpg")
+					br
+					a(href="images/LTM_Reading.jpg", rel="gallery", title="Reading the memory"): img(src="images/thumbs/LTM_Reading.jpg")
+					a(href="images/LTM_Writing.jpg", rel="gallery", title="Writing the memory"): img(src="images/thumbs/LTM_Writing.jpg")
+					a(href="images/LTM_Moving.jpg", rel="gallery", title="Moving the memory"): img(src="images/thumbs/LTM_Moving.jpg")
+				p.info
+					a(href="images/LegoTuringMachine-HighRes.zip") (download high resolution)
 
+			section#Credits
+				h2 Credits
+					.image-credits
+						a(href="http://www.cwi.nl", target="_blank"): img(src="images/CWI.png", height="75px")
+						a(href="http://www.rascal-mpl.org", target="_blank"): img(src="images/RASCAL.png", height="75px")
+						a(href="http://www.lego.nl", target="_blank"): img(src="images/LEGO.png", height="75px")
+				h3 Built by
+				ul
+					li Jeroen van den Bos (CWI/NFI)
+					li: a(href="http://homepages.cwi.nl/~landman/", target="_blank") Davy Landman (CWI)
+
+				h3 Additional contributions by
+				ul
+					li Karin Blankers (CWI)
+					li: a(href="http://homepages.cwi.nl/~paulk/", target="_blank") Paul Klint (CWI)
+					li Atze van der Ploeg (CWI)
+					li: a(href="http://homepages.cwi.nl/~storm/", target="_blank") Tijs van der Storm (CWI)
+					li: a(href="http://homepages.cwi.nl/~jurgenv/", target="_blank") Jurgen Vinju (CWI)
+					li: a(href="http://grammarware.net", target="_blank") Vadim Zaytsev (CWI)
+					li: a(href="http://www.cwi.nl/research-groups/Software-Analysis-and-Transformation", target="_blank") Software Analysis and Transformation Team
+
+		script(type="text/javascript", src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js")
+		script(type="text/javascript", src="/fancybox/jquery.fancybox-1.3.4.pack.js")
+		script(type="text/javascript")
+			$(document).ready(function() {
+				$('#Gallery .images a').fancybox({
+					'padding' : 0,
+					'cyclic': true,
+					'centerOnScroll': true,
+					'hideOnContentClick': true,
+					'titlePosition': 'over'
+				});
+			});
 
