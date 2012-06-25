@@ -106,9 +106,10 @@ def print_results(results):
 
 def print_referrals(results):
   f = open('result.csv','w')
+  f.write("Host,Url,Visits\n")
   for refs in results.get('rows'):
     f.write((
-      '"http://%(source)s%(path)s",%(amount)d\n' % \
+      '"%(source)s","http://%(source)s%(path)s",%(amount)d\n' % \
         {"source":refs[0], "path":refs[1].replace("(not set)",""), "amount":int(refs[2])}
       ).encode('utf-8'))
   f.close()
