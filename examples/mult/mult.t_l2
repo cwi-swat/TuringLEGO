@@ -20,9 +20,7 @@ L copy
   }
   W1
   MF
-  J0 end
   J1 copy
-L end
   REP 2 {
     L back2
       MB
